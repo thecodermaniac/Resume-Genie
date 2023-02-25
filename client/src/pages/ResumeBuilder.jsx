@@ -54,11 +54,11 @@ const ResumeBuilder = ({ setResult }) => {
   };
   return (
     <div className=" flex flex-row mx-10   h-[calc(100vh-7rem)] rounded-xl justify-center ">
-      <aside className=" hidden md:flex w-1/3 bg-gradient-to-tr from-teal-500 to-teal-600 rounded-l-xl">
+      <aside className=" hidden md:flex w-1/3 bg-gray-900 rounded-l-xl">
         <div className=" mt-10 md:mx-10 flex flex-col justify-around h-full">
           <h1 className=" text-5xl font-bold mb-10">Resume Builder</h1>
           {/* Card Start */}
-          <div className=" bg-teal-600 shadow-md px-10 py-10 rounded-lg">
+          <div className=" bg-gray-800 shadow-md px-10 py-10 rounded-lg">
             <p className=" text-xl mb-4">
               Generate a resume with ChatGPT in few seconds
             </p>
