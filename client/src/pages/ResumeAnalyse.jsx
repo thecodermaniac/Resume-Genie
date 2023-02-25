@@ -3,13 +3,17 @@ import axios from "axios";
 
 const ResumeAnalyse = () => {
   const [headshot, setHeadshot] = useState(null);
+  const [analyseAns, setAns] = useState("");
   const handleUpload = (e) => {
     const dataForm = new FormData();
     dataForm.append("pdffile", headshot, headshot.name);
     axios
       .post("http://localhost:3001/resume/analyse", dataForm)
-      .then((res) => {})
-      .catch((err) => console.log(err));
+      .then((res) => {
+        setAns(res?.data?.answer);
+        console.log(res.data);
+      })
+      .catch((err) => alert(err));
   };
   return (
     <div className=" h-screen ">
