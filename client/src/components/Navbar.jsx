@@ -1,18 +1,22 @@
 import { BsFillMoonStarsFill, BsFillSunFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { VscListFlat } from "react-icons/vsc";
+import { VscListFlat, VscChromeClose } from "react-icons/vsc";
 
 export default function Navbar(props) {
   const [showmobileNav, setShow] = useState(false);
-  const toggleExpanded = () => setShow((current) => !current);
+  const toggleExpanded = () => {
+    setShow((current) => !current);
+    setToggleHamberger(!toggleHamburger);
+  };
+  const [toggleHamburger, setToggleHamberger] = useState(true);
   return (
     // For Sticky, set the classes: sticky, top-0 left-0
     <>
       <nav
-        className={` items-center font-semibold text-black py-8 md:py-8 transition-all duration-1000 mb-3 flex justify-around sticky w-full top-0 left-0 z-20 backdrop-blur-sm `}
+        className={` items-center font-semibold text-black py-4 md:py-8 transition-all duration-1000 mb-3 flex justify-around sticky w-full top-0 left-0 z-20 backdrop-blur-sm `}
       >
-        <h1 className={`text-sm md:text-xl lg:text-xl dark:text-teal-600 `}>
+        <h1 className={`text-xl md:text-xl lg:text-xl text-teal-600`}>
           Resume Genie
         </h1>
         <ul className="hidden md:flex items-center">
@@ -68,29 +72,41 @@ export default function Navbar(props) {
         <div>
           <Link
             to={"/resume-builder"}
-            className="  flex items-center text-[0.8rem] md:text-base text-teal-600 bg-teal-100 px-4 py-2 border-none rounded-md ml-4 md:ml-8"
+            className=" hidden md:flex items-center text-[0.8rem] md:text-base text-teal-600 bg-teal-100 px-4 py-2 border-none rounded-md ml-4 md:ml-8"
           >
             SignUp
           </Link>
         </div>
-        <VscListFlat
-          data-collapse-toggle="navbar-default"
-          className="flex md:hidden text-white"
-          aria-controls="navbar-default"
-          aria-expanded="false"
-          onClick={toggleExpanded}
-        />
+        {toggleHamburger ? (
+          <VscListFlat
+            data-collapse-toggle="navbar-default"
+            className="flex md:hidden text-white text-3xl"
+            aria-controls="navbar-default"
+            aria-expanded="false"
+            onClick={toggleExpanded}
+          />
+        ) : (
+          <VscChromeClose
+            data-collapse-toggle="navbar-default"
+            className="flex md:hidden text-white text-3xl"
+            aria-controls="navbar-default"
+            aria-expanded="false"
+            onClick={toggleExpanded}
+          />
+        )}
       </nav>
       {/* mobile nav start */}
       <div
-        class={`${showmobileNav ? "block" : "hidden"} absolute w-1/2`}
+        className={`${
+          showmobileNav ? "block" : "hidden"
+        } absolute z-50   h-full w-screen`}
         id="navbar-default"
       >
-        <ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-900 md:dark:bg-gray-900">
+        <ul class="flex flex-col p-4 mt-4 h-screen rounded-lg  bg-gray-900">
           <li>
             <Link to={"/blog"}>
               <a
-                class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
+                class="block py-2 pl-3 pr-4 mb-5 text-gray-400 rounded md:bg-transparent md:p-0 "
                 aria-current="page"
               >
                 Analysis
@@ -100,7 +116,7 @@ export default function Navbar(props) {
           <li>
             <a
               href="#"
-              class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              className="block py-2 pl-3 pr-4 mb-5 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
             >
               Ask Me
             </a>
@@ -108,7 +124,7 @@ export default function Navbar(props) {
           <li>
             <a
               href="#"
-              class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              className="block py-2 pl-3 pr-4 mb-5 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
             >
               Resume Builder
             </a>
@@ -116,7 +132,8 @@ export default function Navbar(props) {
 
           <Link
             to={"/resume-builder"}
-            className="  flex items-center text-[0.8rem] md:text-base text-teal-600 bg-teal-100 px-4 py-2 border-none rounded-md ml-4 md:ml-8"
+            // className="  flex items-center text-[0.8rem] md:text-base text-teal-600 bg-teal-100 px-4 py-2 border-none rounded-md ml-4 md:ml-8"
+            className="block py-2 pl-3 pr-4 mb-5 rounded  bg-teal-100 text-teal-600"
           >
             SignUp
           </Link>
