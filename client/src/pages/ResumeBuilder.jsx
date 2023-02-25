@@ -174,7 +174,7 @@ const ResumeBuilder = ({ setResult }) => {
               id="photo"
               accept="image/x-png,image/jpeg"
               onChange={(e) => setHeadshot(e.target.files[0])}
-              className=" w-full border-none p-0 mt-3 border-none"
+              className=" w-full border-none p-0 mt-3 "
             />
           </div>
           <div className=" flex items-center justify-center">
