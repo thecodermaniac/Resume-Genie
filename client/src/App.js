@@ -20,7 +20,7 @@ function App() {
     )
   );
   return (
-    <div className=" text-black">
+    <div className=" text-white bg-black h-[100vh]">
       <RouterProvider router={router} />
     </div>
   );
