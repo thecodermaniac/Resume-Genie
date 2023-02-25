@@ -1,11 +1,14 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import { IoSend } from "react-icons/io5";
 import axios from "axios";
-// import "./App.css";
+import "./AskMe.css";
 
 const YOU = "you";
 const AI = "ai";
 
 const AskMe = () => {
+  const chatWindowRef = useRef(null);
+
   const inputRef = useRef();
 
   const [qna, setQna] = useState([]);
@@ -14,6 +17,12 @@ const AskMe = () => {
   const updateQNA = (from, value) => {
     setQna((qna) => [...qna, { from, value }]);
   };
+
+  useEffect(() => {
+    if (chatWindowRef.current) {
+      chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
+    }
+  }, [qna]);
 
   const handleSend = () => {
     const question = inputRef.current.value;
@@ -43,34 +52,37 @@ const AskMe = () => {
   };
 
   return (
-    <main className=" container">
-      <div className="chats">
+    <main className=" flex flex-col justify-between min-h-[85vh] ">
+      <div className="p-1 flex flex-col items-center ">
         {qna.map((qna) => {
           if (qna.from === YOU) {
             return (
-              <div className="send chat">
+              <div className="bg-white self-end mx-20  flex rounded-l-lg rounded-t-lg p-4 mt-6 w-auto">
                 <img
                   src="https://cdn-icons-png.flaticon.com"
                   alt=""
                   className="avatar"
                 />
-                <div>{renderContent(qna)}</div>
+                <div className=" text">{renderContent(qna)}</div>
               </div>
             );
           }
           return (
-            <div className="recieve chat">
+            <div
+              ref={chatWindowRef}
+              className="bg-gradient-to-l from-teal-300 to-cyan-300 self-start mx-20  flex rounded-r-lg rounded-t-lg p-4 mt-6  w-auto"
+            >
               <img
                 src="https://cdn-icons-png.flaticon.com"
                 alt=""
                 className="avatar"
               />
-              <div>{renderContent(qna)}</div>
+              <div className=" text">{renderContent(qna)}</div>
             </div>
           );
         })}
         {loading && (
-          <div className="recieve chat">
+          <div className="bg-gradient-to-l from-teal-300 to-cyan-300 self-start mx-20  flex rounded-r-lg rounded-t-lg p-4 mt-6  w-auto text-black">
             <img
               src="https://cdn-icons-png.flaticon.com"
               alt=""
@@ -81,19 +93,19 @@ const AskMe = () => {
         )}
       </div>
 
-      <div className="chat-input">
+      <div className="flex sticky bottom-0 mx-20 items-center justify-center ">
         <input
           type="text"
           ref={inputRef}
-          className="form-control col"
+          className=" w-full"
           placeholder="Try Something"
         />
         <button
           disabled={loading}
-          className="btn btn-success"
+          className="btn btn-success "
           onClick={handleSend}
         >
-          Send
+          <IoSend className=" text-2xl ml-4 text-teal-300" />
         </button>
       </div>
     </main>
