@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const askRoutes = require('./routes/askRoutes')
 const uploadRoutes = require('./routes/uploadRoutes')
+const analysisRouter = require('./routes/analysisRoutes')
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 app.use(askRoutes);
 app.use(uploadRoutes)
+app.use(analysisRouter)
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

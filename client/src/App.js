@@ -12,6 +12,7 @@ import AskMe from "./pages/AskMe";
 import ResumeBuilder from "./pages/ResumeBuilder";
 
 import Resume from "./pages/Resume";
+import ResumeAnalyse from "./pages/ResumeAnalyse";
 
 
 function App() {
@@ -21,8 +22,9 @@ function App() {
       <Route path="/" element={<Root />}>
         <Route index element={<Home />} />
         <Route path="/ask-me" element={<AskMe />} />
-        <Route path="/resume-builder" element={<ResumeBuilder setResult={setResult}/>} />
-        <Route path="/resume" element={<Resume result={result}/>} />
+        <Route path="/resume-builder" element={<ResumeBuilder setResult={setResult} />} />
+        <Route path="/resume" element={<Resume result={result} />} />
+        <Route path="/analysis" element={<ResumeAnalyse />} />
       </Route>
     )
   );
