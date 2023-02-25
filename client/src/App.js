@@ -9,13 +9,20 @@ import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import AskMe from "./pages/AskMe";
+import ResumeBuilder from "./pages/ResumeBuilder";
+
+import Resume from "./pages/Resume";
+
 
 function App() {
+  const [result, setResult] = useState({});
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Root />}>
         <Route index element={<Home />} />
         <Route path="/ask-me" element={<AskMe />} />
+        <Route path="/resume-builder" element={<ResumeBuilder setResult={setResult}/>} />
+        <Route path="/resume" element={<Resume result={result}/>} />
       </Route>
     )
   );
