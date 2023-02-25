@@ -22,7 +22,7 @@ const AskMe = () => {
     setLoading(true);
 
     axios
-      .post("http://localhost:5000/chat", {
+      .post("http://localhost:3001/chat", {
         question,
       })
       .then((response) => {

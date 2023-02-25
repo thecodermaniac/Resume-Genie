@@ -16,14 +16,14 @@ export default function Navbar(props) {
       <nav
         className={` items-center font-semibold text-black py-4 md:py-8 transition-all duration-1000 mb-3 flex justify-around sticky w-full top-0 left-0 z-20 backdrop-blur-sm `}
       >
-        <h1 className={`text-xl md:text-xl lg:text-xl text-teal-600`}>
+        <Link to="/" className={`text-xl md:text-xl lg:text-xl text-teal-600`}>
           Resume Genie
-        </h1>
+        </Link>
         <ul className="hidden md:flex items-center">
           <li>
             <Link
               to="/analysis"
-              className=" text-[0.8rem] md:text-base text-white px-4 py-2 border-none rounded-md ml-4 md:ml-8"
+              className=" hover:text-teal-300 text-[0.8rem] md:text-base text-white px-4 py-2 border-none rounded-md ml-4 md:ml-8"
             >
               Analysis
             </Link>
@@ -38,7 +38,7 @@ export default function Navbar(props) {
           </a> */}
             <Link
               to="/ask-me"
-              className=" text-[0.8rem] md:text-base text-white px-4 py-2 border-none rounded-md ml-4 md:ml-8"
+              className=" hover:text-teal-300 text-[0.8rem] md:text-base text-white px-4 py-2 border-none rounded-md ml-4 md:ml-8"
             >
               Ask Me
             </Link>
@@ -46,7 +46,7 @@ export default function Navbar(props) {
           <li>
             <Link
               to={"/resume-builder"}
-              className=" text-[0.8rem] md:text-base text-white px-4 py-2 border-none rounded-md ml-4 md:ml-8"
+              className=" hover:text-teal-300 text-[0.8rem] md:text-base text-white px-4 py-2 border-none rounded-md ml-4 md:ml-8"
             >
               Resume Builder
             </Link>
