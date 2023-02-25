@@ -37,53 +37,68 @@ router.post(
   "/resume/create",
   upload.single("headshotImage"),
   async (req, res) => {
-    const {
-      fullName,
-      currentPosition,
-      currentLength,
-      currentTechnologies,
-      workHistory,
-    } = req.body;
+    try {
+      const {
+        fullName,
+        currentPosition,
+        currentLength,
+        currentTechnologies,
+        workHistory,
+      } = req.body;
 
-    const workArray = JSON.parse(workHistory);
-    const newEntry = {
-      id: generateID(),
-      fullName,
-      image_url: `http://localhost:3001/uploads/${req.file.filename}`,
-      currentPosition,
-      currentLength,
-      currentTechnologies,
-      workHistory: workArray,
-    };
+      const workArray = JSON.parse(workHistory);
+      const newEntry = {
+        id: generateID(),
+        fullName,
+        image_url: `http://localhost:5000/uploads/${req.file.filename}`,
+        currentPosition,
+        currentLength,
+        currentTechnologies,
+        workHistory: workArray,
+      };
 
-    const prompt1 = `I am writing a resume, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n I write in the technolegies: ${currentTechnologies}. Can you write a 100 words description for the top of the resume(first person writing)?`;
+      const prompt1 = `I am writing a resume, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n I write in the technolegies: ${currentTechnologies}. Can you write a 100 words description for the top of the resume(first person writing)?`;
 
-    const prompt2 = `I am writing a resume, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n I write in the technolegies: ${currentTechnologies}. Can you write 10 points for a resume on what I am good at?`;
+      const prompt2 = `I am writing a resume, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n I write in the technolegies: ${currentTechnologies}. Can you write 10 points for a resume on what I am good at?`;
 
-    const remainderText = () => {
-      let stringText = "";
-      for (let i = 0; i < workArray.length; i++) {
-        stringText += ` ${workArray[i].name} as a ${workArray[i].position}.`;
+      const remainderText = () => {
+        let stringText = "";
+        for (let i = 0; i < workArray.length; i++) {
+          stringText += ` ${workArray[i].name} as a ${workArray[i].position}.`;
+        }
+        return stringText;
+      };
+
+      const prompt3 = `I am writing a resume, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n During my years I worked at ${
+        workArray.length
+      } companies. ${remainderText()} \n Can you write me 50 words for each company seperated in numbers of my succession in the company (in first person)?`;
+
+      const objective = await ChatGPTFunction(prompt1);
+      const keypoints = await ChatGPTFunction(prompt2);
+      const jobResponsibilities = await ChatGPTFunction(prompt3);
+
+      const chatgptData = { objective, keypoints, jobResponsibilities };
+      const data = { ...newEntry, ...chatgptData };
+      if (data == null) {
+        throw {
+          statusCode: 400,
+          message: "something went wrong",
+        };
       }
-      return stringText;
-    };
+      // database.push(data);
 
-    const prompt3 = `I am writing a resume, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n During my years I worked at ${
-      workArray.length
-    } companies. ${remainderText()} \n Can you write me 50 words for each company seperated in numbers of my succession in the company (in first person)?`;
+      res.json({
+        message: "Request successful!",
+        data,
+      });
+    } catch (error) {
+      res.status(error.statusCode || 500).json({
+        success: false,
+        message: error.message,
+      });
+    }
 
-    const objective = await ChatGPTFunction(prompt1);
-    const keypoints = await ChatGPTFunction(prompt2);
-    const jobResponsibilities = await ChatGPTFunction(prompt3);
-
-    const chatgptData = { objective, keypoints, jobResponsibilities };
-    const data = { ...newEntry, ...chatgptData };
     // database.push(data);
-
-    res.json({
-      message: "Request successful!",
-      data,
-    });
   }
 );
 

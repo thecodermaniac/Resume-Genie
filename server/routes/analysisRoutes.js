@@ -21,15 +21,28 @@ const upload = multer({
 
 
 router.post("/resume/analyse", upload.single("pdffile"), async (req, res) => {
-    console.log(req.file.filename);
-    console.log(path.join('pdfUploads', req.file.filename));
-    var pathvalue = path.join('pdfUploads', req.file.filename)
-    let dataBuffer = fs.readFileSync(pathvalue);
-    pdf(dataBuffer).then(function (data) {
-        console.log(data.text)
+    try {
+        console.log(req.file.filename);
+        console.log(path.join('pdfUploads', req.file.filename));
+        var pathvalue = path.join('pdfUploads', req.file.filename)
+        let dataBuffer = fs.readFileSync(pathvalue);
+        pdf(dataBuffer).then(function (data) {
+            console.log(data.text)
 
-        // openai code goes here
-    });
+            // openai code goes here
+        }).catch((error) => {
+            res.status(error.statusCode || 500).json({
+                success: false,
+                message: error.message,
+            });
+        })
+    } catch (error) {
+        res.status(error.statusCode || 500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+
 })
 
 module.exports = router;
