@@ -7,7 +7,7 @@ const ResumeAnalyse = () => {
     const dataForm = new FormData();
     dataForm.append("pdffile", headshot, headshot.name);
     axios
-      .post("http://localhost:5000/resume/analyse", dataForm)
+      .post("http://localhost:3001/resume/analyse", dataForm)
       .then((res) => {})
       .catch((err) => console.log(err));
   };
