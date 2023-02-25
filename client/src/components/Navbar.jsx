@@ -14,7 +14,7 @@ export default function Navbar(props) {
         <li>
           <Link
             to="/analysis"
-            className=" text-[0.8rem] md:text-base text-black px-4 py-2 border-none rounded-md ml-4 md:ml-8"
+            className=" text-[0.8rem] md:text-base text-white px-4 py-2 border-none rounded-md ml-4 md:ml-8"
           >
             Analysis
           </Link>
@@ -29,7 +29,7 @@ export default function Navbar(props) {
           </a> */}
           <Link
             to="/ask-me"
-            className=" text-[0.8rem] md:text-base text-black px-4 py-2 border-none rounded-md ml-4 md:ml-8"
+            className=" text-[0.8rem] md:text-base text-white px-4 py-2 border-none rounded-md ml-4 md:ml-8"
           >
             Ask Me
           </Link>
@@ -37,7 +37,7 @@ export default function Navbar(props) {
         <li>
           <Link
             to={"/resume-builder"}
-            className=" text-[0.8rem] md:text-base text-black px-4 py-2 border-none rounded-md ml-4 md:ml-8"
+            className=" text-[0.8rem] md:text-base text-white px-4 py-2 border-none rounded-md ml-4 md:ml-8"
           >
             Resume Builder
           </Link>
@@ -55,7 +55,7 @@ export default function Navbar(props) {
               onClick={() => {
                 props.setDarkMode(!props.darkMode);
               }}
-              className=" cursor-pointer text-xl hover:text-teal-500"
+              className=" cursor-pointer text-white text-xl hover:text-teal-500"
             />
           )}
         </li>
