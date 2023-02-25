@@ -104,36 +104,38 @@ export default function Navbar(props) {
       >
         <ul class="flex flex-col p-4 mt-4 h-screen rounded-lg  bg-gray-900">
           <li>
-            <Link to={"/blog"}>
-              <a
-                class="block py-2 pl-3 pr-4 mb-5 text-gray-400 rounded md:bg-transparent md:p-0 "
-                aria-current="page"
-              >
-                Analysis
-              </a>
+            <Link
+              to={"/analysis"}
+              class="block py-2 pl-3 pr-4 mb-5 text-gray-400 rounded md:bg-transparent md:p-0 "
+              onClick={toggleExpanded}
+            >
+              Analysis
             </Link>
           </li>
           <li>
-            <a
-              href="#"
-              className="block py-2 pl-3 pr-4 mb-5 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+            <Link
+              to={"/ask-me"}
+              class="block py-2 pl-3 pr-4 mb-5 text-gray-400 rounded md:bg-transparent md:p-0 "
+              onClick={toggleExpanded}
             >
               Ask Me
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="#"
-              className="block py-2 pl-3 pr-4 mb-5 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+            <Link
+              to={"/resume-builder"}
+              class="block py-2 pl-3 pr-4 mb-5 text-gray-400 rounded md:bg-transparent md:p-0 "
+              onClick={toggleExpanded}
             >
               Resume Builder
-            </a>
+            </Link>
           </li>
 
           <Link
             to={"/resume-builder"}
             // className="  flex items-center text-[0.8rem] md:text-base text-teal-600 bg-teal-100 px-4 py-2 border-none rounded-md ml-4 md:ml-8"
             className="block py-2 pl-3 pr-4 mb-5 rounded  bg-teal-100 text-teal-600"
+            onClick={toggleExpanded}
           >
             SignUp
           </Link>
