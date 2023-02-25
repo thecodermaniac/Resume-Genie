@@ -49,7 +49,7 @@ const Hero = () => {
           <div className=" flex font-bold items-center relative justify-center -translate-y-5 cursor-pointer">
             <button
               onClick={handleClick}
-              className={` items-center justify-center  transition-all duration-1000 ${
+              className={` items-center justify-center  transition-all duration-1000 text-teal-500 ${
                 fix ? "hidden" : "flex"
               }`}
             >
@@ -63,8 +63,10 @@ const Hero = () => {
       </div>
       <div className="flex mx-4 md:mx-32  justify-between items-center flex-col md:flex-row h-[85vh]">
         <aside className=" flex-col justify-center text-center md:text-left items-center md:items-start flex">
-          <h1 className=" mt-10 text-5xl md:text-8xl mb-10 font-semibold">
-            <span className=" mb-5 text-3xl font-medium">Create or Edit</span>
+          <h1 className=" mt-10 text-5xl md:text-8xl mb-5 font-semibold text-teal-500">
+            <span className=" mb-5 text-3xl font-medium text-white">
+              Create or Edit
+            </span>
             <br />
             Your Perfect Resume
           </h1>
