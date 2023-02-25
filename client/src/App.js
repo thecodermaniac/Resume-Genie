@@ -14,7 +14,6 @@ import ResumeBuilder from "./pages/ResumeBuilder";
 import Resume from "./pages/Resume";
 import ResumeAnalyse from "./pages/ResumeAnalyse";
 
-
 function App() {
   const [result, setResult] = useState({});
   const router = createBrowserRouter(
@@ -25,11 +24,12 @@ function App() {
         <Route path="/resume-builder" element={<ResumeBuilder setResult={setResult} />} />
         <Route path="/resume" element={<Resume result={result} />} />
         <Route path="/analysis" element={<ResumeAnalyse />} />
+
       </Route>
     )
   );
   return (
-    <div className=" text-white bg-black h-[100vh]">
+    <div className=" text-white bg-black">
       <RouterProvider router={router} />
     </div>
   );
