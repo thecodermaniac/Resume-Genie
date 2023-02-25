@@ -50,15 +50,19 @@ const ResumeBuilder = ({ setResult }) => {
     setLoading(true);
   };
   return (
-    <div className="app">
-      <h1>Resume Builder</h1>
-      <p>Generate a resume with ChatGPT in few seconds</p>
+    <div className="border-2 border-red-500">
+      <h1 className=" text-2xl font-bold mb-4">Resume Builder</h1>
+      <p className=" text-lg mb-4">
+        Generate a resume with ChatGPT in few seconds
+      </p>
       <form
         onSubmit={handleFormSubmit}
         method="POST"
         encType="multipart/form-data"
       >
-        <label htmlFor="fullName">Enter your full name</label>
+        <label htmlFor="fullName" className=" text-lg font-semibold">
+          Enter your full name
+        </label>
         <input
           type="text"
           required

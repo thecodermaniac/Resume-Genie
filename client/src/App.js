@@ -21,15 +21,17 @@ function App() {
       <Route path="/" element={<Root />}>
         <Route index element={<Home />} />
         <Route path="/ask-me" element={<AskMe />} />
-        <Route path="/resume-builder" element={<ResumeBuilder setResult={setResult} />} />
+        <Route
+          path="/resume-builder"
+          element={<ResumeBuilder setResult={setResult} />}
+        />
         <Route path="/resume" element={<Resume result={result} />} />
         <Route path="/analysis" element={<ResumeAnalyse />} />
-
       </Route>
     )
   );
   return (
-    <div className=" text-white bg-black">
+    <div className=" text-white bg-black overflow-hidden">
       <RouterProvider router={router} />
     </div>
   );

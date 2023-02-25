@@ -2,9 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* html {
+html {
   transition: ease-in-out 500ms;
-} */
+  background-color: black;
+}
 
 body {
   margin: 0;
