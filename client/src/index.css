@@ -24,7 +24,7 @@ code {
 /* resume builder css */
 form {
   padding: 10px;
-  width: 80%;
+
   display: flex;
   flex-direction: column;
 }
