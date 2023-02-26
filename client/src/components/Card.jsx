@@ -49,7 +49,7 @@ const Card = (props) => {
       <div className=" lg:flex gap-10">
         {/* Cards Start*/}
         <div
-          className={`shadow-lg p-5 rounded-xl my-10 ${
+          className={`shadow-lg p-5 w-1/3 rounded-xl my-10 ${
             props.darkMode ? "bg-gray-900" : "bg-teal-100"
           }`}
         >
@@ -76,7 +76,7 @@ const Card = (props) => {
 
         {/* Cards Start*/}
         <div
-          className={`shadow-lg p-5 rounded-xl my-10 ${
+          className={`shadow-lg p-5 w-1/3 rounded-xl my-10 ${
             props.darkMode ? "bg-gray-900" : "bg-teal-100"
           }`}
         >
@@ -87,15 +87,15 @@ const Card = (props) => {
                 props.darkMode ? "text-teal-600" : "text-black"
               } `}
             >
-              Analysis
+              Ask Me
             </h3>
             <p
               className={` py-2  ${
                 props.darkMode ? "text-white" : "text-black"
               } `}
             >
-              AI-powered resume analysis and feedback to help you stand out in
-              your job search.
+              Experience the Power of AI with Our Chatbot - Get Instant,
+              Accurate Answers to Your Questions
             </p>
           </Link>
         </div>
@@ -103,7 +103,7 @@ const Card = (props) => {
 
         {/* Cards Start*/}
         <div
-          className={`shadow-lg p-5 rounded-xl my-10 ${
+          className={`shadow-lg p-5 w-1/3 rounded-xl my-10 ${
             props.darkMode ? "bg-gray-900" : "bg-teal-100"
           }`}
         >
@@ -114,15 +114,15 @@ const Card = (props) => {
                 props.darkMode ? "text-teal-600" : "text-black"
               } `}
             >
-              Analysis
+              Resume Builder
             </h3>
             <p
               className={` py-2  ${
                 props.darkMode ? "text-white" : "text-black"
               } `}
             >
-              AI-powered resume analysis and feedback to help you stand out in
-              your job search.
+              Create Your Dream Resume with Our Intelligent AI-Powered Resume
+              Builder - Get Started Now!
             </p>
           </Link>
         </div>
