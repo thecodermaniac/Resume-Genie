@@ -3,12 +3,17 @@ const router = express.Router();
 const path = require("path");
 const multer = require("multer");
 const openai = require("../openAI/openapi");
+const fs = require("fs");
 const generateID = () => Math.random().toString(36).substring(2, 10);
 //mutler configure
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
+    if (!fs.existsSync("uploads")) {
+      fs.mkdirSync('uploads')
+    }
+
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -69,9 +74,8 @@ router.post(
         return stringText;
       };
 
-      const prompt3 = `I am writing a resume, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n During my years I worked at ${
-        workArray.length
-      } companies. ${remainderText()} \n Can you write me 50 words for each company seperated in numbers of my succession in the company (in first person)?`;
+      const prompt3 = `I am writing a resume, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n During my years I worked at ${workArray.length
+        } companies. ${remainderText()} \n Can you write me 50 words for each company seperated in numbers of my succession in the company (in first person)?`;
 
       const objective = await ChatGPTFunction(prompt1);
       const keypoints = await ChatGPTFunction(prompt2);

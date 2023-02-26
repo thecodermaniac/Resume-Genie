@@ -70,7 +70,7 @@ const AskMe = () => {
           return (
             <div
               ref={chatWindowRef}
-              className="bg-gray-900 self-start mx-20  flex rounded-r-lg rounded-t-lg p-4 mt-6  w-auto"
+              className="bg-gray-200 self-start mx-20  flex rounded-r-lg rounded-t-lg p-4 mt-6  w-auto"
             >
               <img
                 src="https://cdn-icons-png.flaticon.com"
