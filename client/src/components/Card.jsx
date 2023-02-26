@@ -80,7 +80,7 @@ const Card = (props) => {
             props.darkMode ? "bg-gray-900" : "bg-teal-100"
           }`}
         >
-          <Link>
+          <Link to={'/ask-me'}>
             <img src={cardImg2} alt="" className=" mx-auto h-96 object-cover" />
             <h3
               className={` text-2xl font-medium  ${
@@ -107,7 +107,7 @@ const Card = (props) => {
             props.darkMode ? "bg-gray-900" : "bg-teal-100"
           }`}
         >
-          <Link>
+          <Link to={'/resume-builder'}>
             <img src={cardImg3} alt="" className=" mx-auto h-96 object-cover" />
             <h3
               className={` text-2xl font-medium  ${
