@@ -9,7 +9,10 @@ const pdf = require("pdf-parse");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "pdfUploads");
-    fs.mkdirSync('pdfUploads')
+    if (!fs.existsSync("pdfUploads")) {
+      fs.mkdirSync('pdfUploads')
+    }
+    
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));

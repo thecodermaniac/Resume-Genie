@@ -10,7 +10,10 @@ const generateID = () => Math.random().toString(36).substring(2, 10);
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
-    fs.mkdirSync('pdfUploads')
+    if (!fs.existsSync("uploads")) {
+      fs.mkdirSync('uploads')
+    }
+
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -71,9 +74,8 @@ router.post(
         return stringText;
       };
 
-      const prompt3 = `I am writing a resume, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n During my years I worked at ${
-        workArray.length
-      } companies. ${remainderText()} \n Can you write me 50 words for each company seperated in numbers of my succession in the company (in first person)?`;
+      const prompt3 = `I am writing a resume, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n During my years I worked at ${workArray.length
+        } companies. ${remainderText()} \n Can you write me 50 words for each company seperated in numbers of my succession in the company (in first person)?`;
 
       const objective = await ChatGPTFunction(prompt1);
       const keypoints = await ChatGPTFunction(prompt2);
