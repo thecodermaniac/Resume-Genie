@@ -13,9 +13,7 @@ export default function Navbar(props) {
   return (
     // For Sticky, set the classes: sticky, top-0 left-0
     <>
-      <nav
-        className={` items-center font-semibold text-black py-4 md:py-8 transition-all duration-1000 mb-3 flex justify-around sticky w-full top-0 left-0 z-20 backdrop-blur-sm `}
-      >
+      <nav className="sticky w-full top-0 left-0 transition-all duration-1000 ease-in-out mb-3 flex justify-around z-20 backdrop-blur-lg  py-5 md:py-10 bg-transparent">
         <Link to="/" className={`text-xl md:text-xl lg:text-xl text-teal-600`}>
           Resume Genie
         </Link>
