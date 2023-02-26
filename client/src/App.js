@@ -7,6 +7,7 @@ import ResumeBuilder from "./pages/ResumeBuilder";
 
 import Resume from "./pages/Resume";
 import ResumeAnalyse from "./pages/ResumeAnalyse";
+import Signin from "./pages/Signin";
 
 function App() {
   const [result, setResult] = useState({});
@@ -41,7 +42,11 @@ function App() {
               />
             }
           />
-          <Route path="/resume" element={<Resume result={result} />} />
+          <Route
+            path="/resume"
+            element={<Resume result={result} darkMode={darkMode} />}
+          />
+          <Route path="/signin" element={<Signin darkMode={darkMode} />} />
           <Route
             path="/analysis"
             element={<ResumeAnalyse />}

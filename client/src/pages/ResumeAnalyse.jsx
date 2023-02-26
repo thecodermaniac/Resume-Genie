@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import axios from "axios";
 
-const ResumeAnalyse = (props) => {
+const ResumeAnalyse = ({ darkMode }) => {
   const [headshot, setHeadshot] = useState(null);
   const [analyseAns, setAns] = useState("");
   const handleUpload = (e) => {
@@ -12,7 +12,7 @@ const ResumeAnalyse = (props) => {
       .post("http://localhost:3001/resume/analyse", dataForm)
       .then((res) => {
         setAns(res?.data?.answer);
-        console.log(res.data);
+        console.log(res?.data?.answer);
       })
       .catch((err) => alert(err));
   };
@@ -44,10 +44,16 @@ const ResumeAnalyse = (props) => {
           />
           <button
             onClick={handleUpload}
-            className=" py-2 px-7 bg-teal-600 mt-10"
+            className=" py-2 px-7 bg-teal-600 mt-10 rounded-md"
           >
             Upload
           </button>
+        </div>
+        <div className={` mx-20 `}>
+          <h1 className=" text-2xl font-semibold mb-5 ">
+            Review about your Resume:
+          </h1>
+          <p className="">{analyseAns}</p>
         </div>
       </div>
     </div>
