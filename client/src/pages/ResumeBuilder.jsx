@@ -94,8 +94,10 @@ const ResumeBuilder = ({ setResult, darkMode }) => {
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               className={` bg-transparent px-5 py-3  border-b-2 ${
-                darkMode ? "border-[#ffffffb8]" : "border-black"
-              }   focus:outline-none text-black`}
+                darkMode
+                  ? "border-[#ffffffb8] text-white"
+                  : "border-black text-black"
+              }   focus:outline-none `}
             />
           </div>
 
@@ -107,7 +109,9 @@ const ResumeBuilder = ({ setResult, darkMode }) => {
                 required
                 name="currentPosition"
                 className={` ${
-                  darkMode ? "border-[#ffffffb8]" : "border-black"
+                  darkMode
+                    ? "border-[#ffffffb8] text-white"
+                    : "border-black text-black"
                 }  w-full bg-transparent border-b-2 border-[#ffffffb8]  focus:outline-none `}
                 value={currentPosition}
                 onChange={(e) => setCurrentPosition(e.target.value)}
@@ -120,7 +124,9 @@ const ResumeBuilder = ({ setResult, darkMode }) => {
                 required
                 name="currentLength"
                 className={` ${
-                  darkMode ? "border-[#ffffffb8]" : "border-black"
+                  darkMode
+                    ? "border-[#ffffffb8] text-white"
+                    : "border-black text-black"
                 }  w-full bg-transparent border-b-2 border-[#ffffffb8]  focus:outline-none `}
                 value={currentLength}
                 onChange={(e) => setCurrentLength(e.target.value)}
@@ -133,8 +139,10 @@ const ResumeBuilder = ({ setResult, darkMode }) => {
               type="text"
               required
               name="currentTechnologies"
-              className={` ${
-                darkMode ? "border-[#ffffffb8]" : "border-black"
+              className={`${
+                darkMode
+                  ? "border-[#ffffffb8] text-white"
+                  : "border-black text-black"
               }  w-full bg-transparent border-b-2 border-[#ffffffb8]  focus:outline-none`}
               value={currentTechnologies}
               onChange={(e) => setCurrentTechnologies(e.target.value)}
@@ -153,7 +161,9 @@ const ResumeBuilder = ({ setResult, darkMode }) => {
                   name="name"
                   required
                   className={` ${
-                    darkMode ? "border-[#ffffffb8]" : "border-black"
+                    darkMode
+                      ? "border-[#ffffffb8] text-white"
+                      : "border-black text-black"
                   } bg-transparent border-b-2 border-[#ffffffb8]  focus:outline-none`}
                   onChange={(e) => handleUpdateCompany(e, index)}
                 />
@@ -165,8 +175,10 @@ const ResumeBuilder = ({ setResult, darkMode }) => {
                   name="position"
                   required
                   className={` ${
-                    darkMode ? "border-[#ffffffb8]" : "border-black"
-                  }  bg-transparent border-b-2 border-[#ffffffb8]  focus:outline-none`}
+                    darkMode
+                      ? "border-[#ffffffb8] text-white"
+                      : "border-black text-black"
+                  } bg-transparent border-b-2 border-[#ffffffb8]  focus:outline-none`}
                   onChange={(e) => handleUpdateCompany(e, index)}
                 />
               </div>
@@ -198,7 +210,9 @@ const ResumeBuilder = ({ setResult, darkMode }) => {
               accept="image/x-png,image/jpeg"
               onChange={(e) => setHeadshot(e.target.files[0])}
               className={` ${
-                darkMode ? "border-[#ffffffb8]" : "border-black"
+                darkMode
+                  ? "border-[#ffffffb8] text-white"
+                  : "border-black text-black"
               }  w-full border-none p-0 mt-3 bg-transparent border-b-2 border-[#ffffffb8]  focus:outline-none`}
             />
           </div>

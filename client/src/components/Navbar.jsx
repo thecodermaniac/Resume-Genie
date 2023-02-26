@@ -17,7 +17,7 @@ export default function Navbar(props) {
       <nav className="sticky w-full top-0 left-0 transition-all duration-1000 ease-in-out mb-3 flex justify-around z-20 backdrop-blur-lg  py-5 md:py-5 bg-transparent">
         <Link
           to="/"
-          className={`text-xl md:text-xl lg:text-xl ${
+          className={`text-xl md:text-xl lg:text-xl font-semibold ${
             props.darkMode ? "text-teal-500" : "text-teal-600"
           } flex items-center`}
         >
