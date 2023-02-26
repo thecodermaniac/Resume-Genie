@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import bgBlur from "../images/blur.png";
+import { IoIosAddCircle } from "react-icons/io";
+import { AiFillMinusCircle } from "react-icons/ai";
 
 import Loading from "../components/Loader";
 
@@ -51,12 +53,12 @@ const ResumeBuilder = ({ setResult }) => {
     setLoading(true);
   };
   return (
-    <div className=" flex flex-row mx-10 border-2 border-red-500 h-[calc(100vh-8rem)] rounded-xl justify-center ">
-      <aside className=" hidden md:flex w-1/3 bg-gradient-to-tr from-teal-500 to-teal-600 rounded-l-xl">
+    <div className=" flex flex-row mx-10   h-[calc(100vh-7rem)] rounded-xl justify-center ">
+      <aside className=" hidden md:flex w-1/3 bg-gray-900 rounded-l-xl">
         <div className=" mt-10 md:mx-10 flex flex-col justify-around h-full">
           <h1 className=" text-5xl font-bold mb-10">Resume Builder</h1>
           {/* Card Start */}
-          <div className=" bg-teal-600 shadow-md px-10 py-10 rounded-lg">
+          <div className=" bg-gray-800 shadow-md px-10 py-10 rounded-lg">
             <p className=" text-xl mb-4">
               Generate a resume with ChatGPT in few seconds
             </p>
@@ -66,7 +68,7 @@ const ResumeBuilder = ({ setResult }) => {
       </aside>
       <aside className=" mx-0 md:mx-10 flex justify-center">
         <form
-          className=" border-2 border-red-500"
+          className="  "
           onSubmit={handleFormSubmit}
           method="POST"
           encType="multipart/form-data"
@@ -86,14 +88,14 @@ const ResumeBuilder = ({ setResult }) => {
             />
           </div>
 
-          <div className="nestedContainer border-2 border-red-500 mb-5">
+          <div className="nestedContainer   mb-5">
             <div>
               <label htmlFor="currentPosition">Current Position</label>
               <input
                 type="text"
                 required
                 name="currentPosition"
-                className="w-full border-2 border-red-500"
+                className="w-full  "
                 value={currentPosition}
                 onChange={(e) => setCurrentPosition(e.target.value)}
               />
@@ -104,7 +106,7 @@ const ResumeBuilder = ({ setResult }) => {
                 type="number"
                 required
                 name="currentLength"
-                className="w-full border-2 border-red-500"
+                className="w-full  "
                 value={currentLength}
                 onChange={(e) => setCurrentLength(e.target.value)}
               />
@@ -123,7 +125,10 @@ const ResumeBuilder = ({ setResult }) => {
           </div>
 
           {companyInfo.map((company, index) => (
-            <div className="nestedContainer" key={index}>
+            <div
+              className="justify-between w-full items-center flex "
+              key={index}
+            >
               <div className="companies">
                 <label htmlFor="name">Company Name</label>
                 <input
@@ -143,25 +148,25 @@ const ResumeBuilder = ({ setResult }) => {
                 />
               </div>
 
-              <div className="btn__group">
-                {companyInfo.length - 1 === index && companyInfo.length < 4 && (
-                  <button id="addBtn" onClick={handleAddCompany}>
-                    Add
+              <div className=" flex flex-row items-center">
+                {companyInfo.length < 3 && (
+                  <button onClick={handleAddCompany}>
+                    <IoIosAddCircle className=" text-4xl rounded-full bg-transparent text-teal-500" />
                   </button>
                 )}
                 {companyInfo.length > 1 && (
                   <button
-                    id="deleteBtn"
                     onClick={() => handleRemoveCompany(index)}
+                    className=" ml-10"
                   >
-                    Del
+                    <AiFillMinusCircle className=" text-4xl rounded-full bg-transparent text-red-500" />
                   </button>
                 )}
               </div>
             </div>
           ))}
           <div className=" flex flex-col mt-5 w-full">
-            <label htmlFor="photo">Upload your headshot image</label>
+            <label htmlFor="photo">Upload your image</label>
             <input
               type="file"
               name="photo"
@@ -172,8 +177,14 @@ const ResumeBuilder = ({ setResult }) => {
               className=" w-full border-none p-0 mt-3 "
             />
           </div>
-          {!loading && <button>CREATE RESUME</button>}
-          {loading && <Loading />}
+          <div className=" flex items-center justify-center">
+            {!loading && (
+              <button className=" bg-teal-500 px-3 py-2 rounded-md hover:bg-teal-600 font-semibold">
+                CREATE RESUME
+              </button>
+            )}
+            {loading && <Loading />}
+          </div>
         </form>
       </aside>
     </div>
