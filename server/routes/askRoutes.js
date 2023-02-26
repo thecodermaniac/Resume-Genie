@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const openai = require('../openAI/openapi')
+const Chat = require('../models/chatModel')
 
-router.post("/chat", (req, res) => {
+router.post("/chat", async (req, res) => {
     try {
-        const question = req.body.question;
+        const { question, email } = req.body;
 
         openai
             .createCompletion({
@@ -26,6 +27,13 @@ router.post("/chat", (req, res) => {
                 return array;
             })
             .then((answer) => {
+                if (email != null) {
+                    new Chat({
+                        emailAddress: email,
+                        userchat: question,
+                        botchat: answer[0],
+                    }).save()
+                }
                 res.json({
                     answer: answer,
                     prompt: question,
@@ -47,6 +55,26 @@ router.post("/chat", (req, res) => {
 
     //   console.log({ question });
 });
+
+router.get('/getChats', async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (email == null) {
+            res.status(200)
+        }
+        else {
+            let chatlist = await Chat.find({ emailAddress: email })
+            res.json({
+                list: chatlist
+            })
+        }
+    } catch (error) {
+        res.status(error.statusCode || 500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+})
 
 
 module.exports = router
