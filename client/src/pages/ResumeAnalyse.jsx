@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import axios from "axios";
+import Loading from "../components/Loader";
 
 const ResumeAnalyse = ({ darkMode }) => {
+  const [loading, setLoading] = useState(false);
   const [headshot, setHeadshot] = useState(null);
   const [analyseAns, setAns] = useState("");
   const handleUpload = (e) => {
+    setLoading(true);
     const dataForm = new FormData();
     dataForm.append("pdffile", headshot, headshot.name);
     axios
@@ -13,8 +16,12 @@ const ResumeAnalyse = ({ darkMode }) => {
       .then((res) => {
         setAns(res?.data?.answer);
         console.log(res?.data?.answer);
+        setLoading(false);
       })
-      .catch((err) => alert(err));
+      .catch((err) => {
+        setLoading(false);
+        alert(err);
+      });
   };
   return (
     <div className=" h-screen ">
@@ -49,12 +56,15 @@ const ResumeAnalyse = ({ darkMode }) => {
             Upload
           </button>
         </div>
-        <div className={` mx-20 `}>
-          <h1 className=" text-2xl font-semibold mb-5 ">
-            Review about your Resume:
-          </h1>
-          <p className="">{analyseAns}</p>
-        </div>
+        {loading && <Loading />}
+        {!loading && (
+          <div className={` mx-20 `}>
+            <h1 className=" text-2xl font-semibold mb-5 ">
+              Review about your Resume:
+            </h1>
+            <p className="">{analyseAns}</p>
+          </div>
+        )}
       </div>
     </div>
   );
