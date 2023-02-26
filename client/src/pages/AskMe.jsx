@@ -93,20 +93,18 @@ const AskMe = () => {
         )}
       </div>
 
-      <div className="flex sticky bottom-0 mx-20 items-center justify-center ">
-        <input
-          type="text"
-          ref={inputRef}
-          className=" w-full"
-          placeholder="Try Something"
-        />
-        <button
-          disabled={loading}
-          className="btn btn-success "
-          onClick={handleSend}
-        >
-          <IoSend className=" text-2xl ml-4 text-teal-300" />
-        </button>
+      <div className="flex sticky bottom-0 mx-10 md:mx-20  items-center  justify-center ">
+        <div className=" flex w-full items-center justify-center">
+          <input
+            type="text"
+            ref={inputRef}
+            className=" w-full"
+            placeholder="Try Something"
+          />
+          <button disabled={loading} className=" " onClick={handleSend}>
+            <IoSend className="  text-2xl ml-4 text-teal-300" />
+          </button>
+        </div>
       </div>
     </main>
   );

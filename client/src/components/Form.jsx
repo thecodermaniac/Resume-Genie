@@ -1,75 +1,12 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import bgBlur from "../images/blur.png";
-import { IoIosAddCircle } from "react-icons/io";
-import { AiFillMinusCircle } from "react-icons/ai";
+import React from "react";
 
-import Loading from "../components/Loader";
-
-const ResumeBuilder = ({ setResult }) => {
-  const [fullName, setFullName] = useState("");
-  const [currentPosition, setCurrentPosition] = useState("");
-  const [currentLength, setCurrentLength] = useState(1);
-  const [currentTechnologies, setCurrentTechnologies] = useState("");
-  const [headshot, setHeadshot] = useState(null);
-  const [companyInfo, setCompanyInfo] = useState([{ name: "", position: "" }]);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-
-  const handleAddCompany = () =>
-    setCompanyInfo([...companyInfo, { name: "", position: "" }]);
-
-  const handleRemoveCompany = (index) => {
-    const list = [...companyInfo];
-    list.splice(index, 1);
-    setCompanyInfo(list);
-  };
-  const handleUpdateCompany = (e, index) => {
-    const { name, value } = e.target;
-    const list = [...companyInfo];
-    list[index][name] = value;
-    setCompanyInfo(list);
-  };
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("headshotImage", headshot, headshot.name);
-    formData.append("fullName", fullName);
-    formData.append("currentPosition", currentPosition);
-    formData.append("currentLength", currentLength);
-    formData.append("currentTechnologies", currentTechnologies);
-    formData.append("workHistory", JSON.stringify(companyInfo));
-    axios
-      .post("http://localhost:3001/resume/create", formData, {})
-      .then((res) => {
-        if (res.data.message) {
-          setResult(res.data.data);
-          navigate("/resume");
-        }
-      })
-      .catch((err) => console.error(err));
-    setLoading(true);
-  };
+const Form = () => {
   return (
-    <div className=" flex flex-row mx-10 h-[calc(100vh-7rem)] rounded-xl justify-center ">
-      <aside className=" hidden md:flex w-1/3 bg-gray-900 rounded-l-xl">
-        <div className=" mt-10 md:mx-10 flex flex-col justify-around h-full">
-          <h1 className=" text-5xl font-bold mb-10">Resume Builder</h1>
-          {/* Card Start */}
-          <div className=" bg-gray-800 shadow-md px-10 py-10 rounded-lg">
-            <p className=" text-xl mb-4">
-              Generate a resume with ChatGPT in few seconds
-            </p>
-          </div>
-          {/* Card End */}
-        </div>
-      </aside>
+    <div>
       {/* Form Start */}
-      <aside className=" mx-0 md:mx-10 flex justify-center">
+      {/* <aside className=" mx-0 md:mx-10 flex justify-center">
         <form
-          className=" max-w-[71%] md:w-[90%] "
+          className="  "
           onSubmit={handleFormSubmit}
           method="POST"
           encType="multipart/form-data"
@@ -158,7 +95,7 @@ const ResumeBuilder = ({ setResult }) => {
                 {companyInfo.length > 1 && (
                   <button
                     onClick={() => handleRemoveCompany(index)}
-                    className=" ml-2"
+                    className=" ml-10"
                   >
                     <AiFillMinusCircle className=" text-4xl rounded-full bg-transparent text-red-500" />
                   </button>
@@ -188,9 +125,9 @@ const ResumeBuilder = ({ setResult }) => {
           </div>
         </form>
       </aside>
-      {/* Form End */}
+      Form End */}
     </div>
   );
 };
 
-export default ResumeBuilder;
+export default Form;
