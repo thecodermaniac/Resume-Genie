@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import axios from "axios";
 
-const ResumeAnalyse = () => {
+const ResumeAnalyse = (props) => {
   const [headshot, setHeadshot] = useState(null);
   const [analyseAns, setAns] = useState("");
   const handleUpload = (e) => {
@@ -26,7 +26,7 @@ const ResumeAnalyse = () => {
         </p>
       </div>
       <div className=" flex items-center justify-center h-screen flex-col">
-        <div className=" flex flex-col bg-gray-700 px-40 rounded-md py-20">
+        <div className={` flex flex-col px-40 rounded-md py-20  `}>
           <label
             for="choose-file"
             className=" px-1 py-1 font-semibold md:text-xl border-0 cursor-pointer border-b-2 border-gray-900 hover:text-teal-500 transition-all duration-500 ease-in-out"

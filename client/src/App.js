@@ -1,11 +1,5 @@
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-  Outlet,
-  RouterProvider,
-} from "react-router-dom";
-import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import AskMe from "./pages/AskMe";
@@ -16,37 +10,49 @@ import ResumeAnalyse from "./pages/ResumeAnalyse";
 
 function App() {
   const [result, setResult] = useState({});
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      <Route path="/" element={<Root />}>
-        <Route index element={<Home />} />
-        <Route path="/ask-me" element={<AskMe />} />
-        <Route
-          path="/resume-builder"
-          element={<ResumeBuilder setResult={setResult} />}
-        />
-        <Route path="/resume" element={<Resume result={result} />} />
-        <Route path="/analysis" element={<ResumeAnalyse />} />
-      </Route>
-    )
-  );
+  const [darkMode, setDarkMode] = useState(true);
+
+  useEffect(() => {
+    console.log(darkMode);
+  }, [darkMode]);
+
   return (
-    <div className=" text-white bg-black overflow-hidden">
-      <RouterProvider router={router} />
+    <div
+      className={`${darkMode ? "bg-black text-white" : "bg-white text-black"}`}
+    >
+      <Router>
+        <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+        <Routes>
+          <Route
+            path="/"
+            element={<Home darkMode={darkMode} setDarkMode={setDarkMode} />}
+          />
+          <Route
+            path="/ask-me"
+            element={<AskMe darkMode={darkMode} setDarkMode={setDarkMode} />}
+          />
+          <Route
+            path="/resume-builder"
+            element={
+              <ResumeBuilder
+                setResult={setResult}
+                darkMode={darkMode}
+                setDarkMode={setDarkMode}
+              />
+            }
+          />
+          <Route path="/resume" element={<Resume result={result} />} />
+          <Route
+            path="/analysis"
+            element={<ResumeAnalyse />}
+            darkMode={darkMode}
+            setDarkMode={setDarkMode}
+          />
+        </Routes>
+      </Router>
+      ;
     </div>
   );
 }
 
 export default App;
-
-const Root = () => {
-  const [darkMode, setDarkMode] = useState(false);
-  return (
-    <>
-      <Navbar setDarkMode={setDarkMode} darkMode={darkMode} />
-      <div>
-        <Outlet />
-      </div>
-    </>
-  );
-};

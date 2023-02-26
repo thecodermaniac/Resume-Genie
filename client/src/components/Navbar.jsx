@@ -1,5 +1,6 @@
 import { BsFillMoonStarsFill, BsFillSunFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import logo from "../images/logo.png";
 import { useState } from "react";
 import { VscListFlat, VscChromeClose } from "react-icons/vsc";
 
@@ -13,15 +14,23 @@ export default function Navbar(props) {
   return (
     // For Sticky, set the classes: sticky, top-0 left-0
     <>
-      <nav className="sticky w-full top-0 left-0 transition-all duration-1000 ease-in-out mb-3 flex justify-around z-20 backdrop-blur-lg  py-5 md:py-10 bg-transparent">
-        <Link to="/" className={`text-xl md:text-xl lg:text-xl text-teal-600`}>
+      <nav className="sticky w-full top-0 left-0 transition-all duration-1000 ease-in-out mb-3 flex justify-around z-20 backdrop-blur-lg  py-5 md:py-5 bg-transparent">
+        <Link
+          to="/"
+          className={`text-xl md:text-xl lg:text-xl ${
+            props.darkMode ? "text-teal-500" : "text-teal-600"
+          } flex items-center`}
+        >
+          {/* <img src={logo} alt="" className="w-6 mr-10" /> */}
           Resume Genie
         </Link>
         <ul className="hidden md:flex items-center">
           <li>
             <Link
               to="/analysis"
-              className=" hover:text-teal-300 text-[0.8rem] md:text-base text-white px-4 py-2 border-none rounded-md ml-4 md:ml-8"
+              className={` hover:text-teal-300 text-[0.8rem] md:text-base ${
+                props.darkMode ? "text-white" : "text-black"
+              } px-4 py-2 border-none rounded-md ml-4 md:ml-8`}
             >
               Analysis
             </Link>
@@ -36,7 +45,9 @@ export default function Navbar(props) {
           </a> */}
             <Link
               to="/ask-me"
-              className=" hover:text-teal-300 text-[0.8rem] md:text-base text-white px-4 py-2 border-none rounded-md ml-4 md:ml-8"
+              className={`hover:text-teal-300 text-[0.8rem] md:text-base ${
+                props.darkMode ? "text-white" : "text-black"
+              } px-4 py-2 border-none rounded-md ml-4 md:ml-8`}
             >
               Ask Me
             </Link>
@@ -44,7 +55,9 @@ export default function Navbar(props) {
           <li>
             <Link
               to={"/resume-builder"}
-              className=" hover:text-teal-300 text-[0.8rem] md:text-base text-white px-4 py-2 border-none rounded-md ml-4 md:ml-8"
+              className={`hover:text-teal-300 text-[0.8rem] md:text-base ${
+                props.darkMode ? "text-white" : "text-black"
+              } px-4 py-2 border-none rounded-md ml-4 md:ml-8`}
             >
               Resume Builder
             </Link>
@@ -55,14 +68,16 @@ export default function Navbar(props) {
                 onClick={() => {
                   props.setDarkMode(!props.darkMode);
                 }}
-                className=" cursor-pointer text-2xl  text-white hover:text-teal-500"
+                className={` cursor-pointer text-2xl  text-white hover:text-teal-500`}
               />
             ) : (
               <BsFillMoonStarsFill
                 onClick={() => {
                   props.setDarkMode(!props.darkMode);
                 }}
-                className=" cursor-pointer text-white text-xl hover:text-teal-500"
+                className={`cursor-pointer ${
+                  props.darkMode ? "text-white" : "text-black"
+                } text-xl hover:text-teal-500`}
               />
             )}
           </li>
@@ -70,7 +85,7 @@ export default function Navbar(props) {
         <div>
           <Link
             to={"/resume-builder"}
-            className=" hidden md:flex items-center text-[0.8rem] md:text-base text-teal-600 bg-teal-100 px-4 py-2 border-none rounded-md ml-4 md:ml-8"
+            className={` hidden md:flex items-center text-[0.8rem] md:text-base text-teal-600 bg-teal-100 px-4 py-2 border-none rounded-md ml-4 md:ml-8`}
           >
             SignUp
           </Link>

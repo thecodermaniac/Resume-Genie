@@ -7,7 +7,7 @@ import { AiFillMinusCircle } from "react-icons/ai";
 
 import Loading from "../components/Loader";
 
-const ResumeBuilder = ({ setResult }) => {
+const ResumeBuilder = ({ setResult, darkMode }) => {
   const [fullName, setFullName] = useState("");
   const [currentPosition, setCurrentPosition] = useState("");
   const [currentLength, setCurrentLength] = useState(1);
@@ -54,11 +54,19 @@ const ResumeBuilder = ({ setResult }) => {
   };
   return (
     <div className=" flex flex-row mx-10 h-[calc(100vh-7rem)] rounded-xl justify-center ">
-      <aside className=" hidden md:flex w-1/3 bg-gray-900 rounded-l-xl">
+      <aside
+        className={`hidden md:flex w-1/3 shadow-md ${
+          darkMode ? "bg-gray-900" : "bg-teal-100"
+        } rounded-l-xl`}
+      >
         <div className=" mt-10 md:mx-10 flex flex-col justify-around h-full">
           <h1 className=" text-5xl font-bold mb-10">Resume Builder</h1>
           {/* Card Start */}
-          <div className=" bg-gray-800 shadow-md px-10 py-10 rounded-lg">
+          <div
+            className={`${
+              darkMode ? "bg-gray-800" : "bg-teal-50"
+            } shadow-md px-10 py-10 rounded-lg`}
+          >
             <p className=" text-xl mb-4">
               Generate a resume with ChatGPT in few seconds
             </p>
@@ -69,7 +77,7 @@ const ResumeBuilder = ({ setResult }) => {
       {/* Form Start */}
       <aside className=" mx-0 md:mx-10 flex justify-center">
         <form
-          className=" max-w-[71%] md:w-[90%] "
+          className=" max-w-[71%] md:w-full "
           onSubmit={handleFormSubmit}
           method="POST"
           encType="multipart/form-data"
@@ -180,7 +188,7 @@ const ResumeBuilder = ({ setResult }) => {
           </div>
           <div className=" flex items-center justify-center">
             {!loading && (
-              <button className=" bg-teal-500 px-3 py-2 rounded-md hover:bg-teal-600 font-semibold">
+              <button className=" mt-10 bg-teal-500 px-3 py-2 rounded-md hover:bg-teal-600 font-semibold">
                 CREATE RESUME
               </button>
             )}
