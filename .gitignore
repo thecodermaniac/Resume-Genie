@@ -2,8 +2,9 @@
 
 # dependencies
 node_modules
-pdfUploads
-uploads
+
+env
+server/.env
 /.pnp
 .pnp.js
 
