@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import cardImg from "../images/card1.jpg";
+import cardImg from "../images/card1.jpeg";
+import cardImg2 from "../images/card2.webp";
+import cardImg3 from "../images/card3.jpeg";
 
 const Card = () => {
   return (
@@ -24,21 +26,20 @@ const Card = () => {
     // </section>
     <section className="  mt-20 md:mt-32 mx-4 md:mx-32">
       <div>
-        <h3 className=" text-3xl py-1 dark:text-teal-600">Skills</h3>
+        <h3 className=" text-3xl py-1 dark:text-teal-600">Features</h3>
         <p className=" text-md py-2 leading-8 text-gray-800 dark:text-white">
-          I've always been a{" "}
-          <span className=" text-teal-500">tech enthusiast</span>, I have been
-          learning{" "}
-          <span className=" text-teal-500">MERN Stack Development</span> as my
-          fortie for quite some time along with DSA. I'm quite confident,
-          naturally curious, and perpetually working on improving my skills, one
-          problem at a time.
+          Our cutting-edge website uses{" "}
+          <span className=" text-teal-500">OpenAI's API</span> to offer
+          AI-powered feedback on your resume, helping you showcase your skills
+          and land your dream job. Plus, our chatbot API powered by OpenAI lets
+          you ask any question you can imagine and receive accurate, intelligent
+          answers in real-time.
         </p>
       </div>
       <div className=" lg:flex gap-10">
         {/* Cards Start*/}
         <div className="shadow-lg p-5 rounded-xl my-10 bg-teal-50 dark:bg-gray-900">
-          <Link>
+          <Link to="/analysis">
             <img src={cardImg} alt="" className=" mx-auto h-96 object-cover" />
             <h3 className=" text-2xl font-medium  dark:text-teal-600">
               Analysis
@@ -50,29 +51,32 @@ const Card = () => {
           </Link>
         </div>
         {/* Cards End */}
+
         {/* Cards Start*/}
         <div className="shadow-lg p-5 rounded-xl my-10 bg-teal-50 dark:bg-gray-900">
           <Link>
-            <img src={cardImg} alt="" className=" mx-auto h-96 object-cover" />
+            <img src={cardImg2} alt="" className=" mx-auto h-96 object-cover" />
             <h3 className=" text-2xl font-medium  dark:text-teal-600">
-              Ask Me (Chat)
+              Analysis
             </h3>
             <p className=" py-2 dark:text-white">
-              Get Instant AI-Powered Answers to Your Questions with Our Chatbot
+              AI-powered resume analysis and feedback to help you stand out in
+              your job search.
             </p>
           </Link>
         </div>
         {/* Cards End */}
+
         {/* Cards Start*/}
         <div className="shadow-lg p-5 rounded-xl my-10 bg-teal-50 dark:bg-gray-900">
           <Link>
-            <img src={cardImg} alt="" className=" mx-auto h-96 object-cover" />
+            <img src={cardImg3} alt="" className=" mx-auto h-96 object-cover" />
             <h3 className=" text-2xl font-medium  dark:text-teal-600">
-              Resume Builder
+              Analysis
             </h3>
             <p className=" py-2 dark:text-white">
-              Effortlessly Create a Personalized Resume with Our AI Resume
-              Builder
+              AI-powered resume analysis and feedback to help you stand out in
+              your job search.
             </p>
           </Link>
         </div>
