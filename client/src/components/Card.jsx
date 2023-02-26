@@ -49,7 +49,7 @@ const Card = (props) => {
       <div className=" lg:flex gap-10">
         {/* Cards Start*/}
         <div
-          className={`shadow-lg p-5 w-1/3 rounded-xl my-10 ${
+          className={`shadow-lg p-5 rounded-xl my-10 ${
             props.darkMode ? "bg-gray-900" : "bg-teal-100"
           }`}
         >
@@ -76,7 +76,7 @@ const Card = (props) => {
 
         {/* Cards Start*/}
         <div
-          className={`shadow-lg p-5 w-1/3 rounded-xl my-10 ${
+          className={`shadow-lg p-5 rounded-xl my-10 ${
             props.darkMode ? "bg-gray-900" : "bg-teal-100"
           }`}
         >
@@ -103,7 +103,7 @@ const Card = (props) => {
 
         {/* Cards Start*/}
         <div
-          className={`shadow-lg p-5 w-1/3 rounded-xl my-10 ${
+          className={`shadow-lg p-5 rounded-xl my-10 ${
             props.darkMode ? "bg-gray-900" : "bg-teal-100"
           }`}
         >
