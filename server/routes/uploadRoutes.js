@@ -3,12 +3,14 @@ const router = express.Router();
 const path = require("path");
 const multer = require("multer");
 const openai = require("../openAI/openapi");
+const fs = require("fs");
 const generateID = () => Math.random().toString(36).substring(2, 10);
 //mutler configure
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
+    fs.mkdirSync('pdfUploads')
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
