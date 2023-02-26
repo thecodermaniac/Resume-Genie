@@ -21,7 +21,7 @@ export default function Navbar(props) {
             props.darkMode ? "text-teal-500" : "text-teal-600"
           } flex items-center`}
         >
-          {/* <img src={logo} alt="" className="w-6 mr-10" /> */}
+          <img src={logo} alt="" className="w-4 mr-10" />
           Resume Genie
         </Link>
         <ul className="hidden md:flex items-center">
