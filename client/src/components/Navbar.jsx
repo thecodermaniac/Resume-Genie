@@ -82,18 +82,7 @@ export default function Navbar(props) {
             )}
           </li>
         </ul>
-        <div>
-          <Link
-            to={"signin"}
-            className={` hidden md:flex items-center text-[0.8rem] md:text-base   ${
-              props.darkMode
-                ? "bg-teal-100 text-teal-600"
-                : "bg-teal-700 text-teal-100"
-            } px-4 py-2 border-none rounded-md ml-4 md:ml-8`}
-          >
-            SignUp
-          </Link>
-        </div>
+        {/* <div></div> */}
         {toggleHamburger ? (
           <VscListFlat
             data-collapse-toggle="navbar-default"
@@ -148,14 +137,14 @@ export default function Navbar(props) {
             </Link>
           </li>
 
-          <Link
+          {/* <Link
             to={"/signin"}
             // className="  flex items-center text-[0.8rem] md:text-base text-teal-600 bg-teal-100 px-4 py-2 border-none rounded-md ml-4 md:ml-8"
             className="block py-2 pl-3 pr-4 mb-5 rounded  bg-teal-100 text-teal-600"
             onClick={toggleExpanded}
           >
             SignUp
-          </Link>
+          </Link> */}
         </ul>
       </div>
       {/* mobile nav end */}
