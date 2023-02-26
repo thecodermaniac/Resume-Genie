@@ -8,7 +8,7 @@ import "../components/GenieSVG.css";
 import { AiFillCaretDown } from "react-icons/ai";
 import { Link, scroller } from "react-scroll";
 
-const Hero = () => {
+const Hero = (props) => {
   const handleClick = () => {
     const height = window.innerHeight;
     const offset = height;
@@ -64,7 +64,11 @@ const Hero = () => {
       <div className="flex mx-4 md:mx-32  justify-between items-center flex-col md:flex-row h-[85vh]">
         <aside className=" flex-col justify-center text-center md:text-left items-center md:items-start flex">
           <h1 className=" mt-10 text-5xl md:text-8xl mb-5 font-semibold text-teal-500">
-            <span className=" mb-5 text-3xl font-medium text-white">
+            <span
+              className={` mb-5 text-3xl font-medium ${
+                props.darkMode ? "text-white" : "text-black"
+              }`}
+            >
               Create or Edit
             </span>
             <br />

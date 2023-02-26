@@ -57,7 +57,7 @@ const AskMe = () => {
         {qna.map((qna) => {
           if (qna.from === YOU) {
             return (
-              <div className="bg-white self-end mx-20  flex rounded-l-lg rounded-t-lg p-4 mt-6 w-auto">
+              <div className="bg-teal-100 self-end mx-20  flex rounded-l-lg rounded-t-lg p-4 mt-6 w-auto">
                 <img
                   src="https://cdn-icons-png.flaticon.com"
                   alt=""
