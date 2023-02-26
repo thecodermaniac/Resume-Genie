@@ -55,7 +55,7 @@ const ResumeBuilder = ({ setResult, darkMode }) => {
   return (
     <div className=" flex flex-row mx-10 h-[calc(100vh-7rem)] rounded-xl justify-center ">
       <aside
-        className={`hidden md:flex w-1/3 shadow-md ${
+        className={`hidden md:flex w-1/3 shadow-md  ${
           darkMode ? "bg-gray-900" : "bg-teal-100"
         } rounded-l-xl`}
       >
@@ -75,7 +75,7 @@ const ResumeBuilder = ({ setResult, darkMode }) => {
         </div>
       </aside>
       {/* Form Start */}
-      <aside className=" mx-0 md:mx-10 flex justify-center">
+      <aside className=" mx-0 md:mx-10 flex justify-center items-center ">
         <form
           className=" max-w-[71%] md:w-full "
           onSubmit={handleFormSubmit}
@@ -93,7 +93,9 @@ const ResumeBuilder = ({ setResult, darkMode }) => {
               id="fullName"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className=" px-5 py-3 text-black"
+              className={` bg-transparent px-5 py-3  border-b-2 ${
+                darkMode ? "border-[#ffffffb8]" : "border-black"
+              }   focus:outline-none text-black`}
             />
           </div>
 
@@ -104,7 +106,9 @@ const ResumeBuilder = ({ setResult, darkMode }) => {
                 type="text"
                 required
                 name="currentPosition"
-                className="w-full  "
+                className={` ${
+                  darkMode ? "border-[#ffffffb8]" : "border-black"
+                }  w-full bg-transparent border-b-2 border-[#ffffffb8]  focus:outline-none `}
                 value={currentPosition}
                 onChange={(e) => setCurrentPosition(e.target.value)}
               />
@@ -115,7 +119,9 @@ const ResumeBuilder = ({ setResult, darkMode }) => {
                 type="number"
                 required
                 name="currentLength"
-                className="w-full  "
+                className={` ${
+                  darkMode ? "border-[#ffffffb8]" : "border-black"
+                }  w-full bg-transparent border-b-2 border-[#ffffffb8]  focus:outline-none `}
                 value={currentLength}
                 onChange={(e) => setCurrentLength(e.target.value)}
               />
@@ -127,7 +133,9 @@ const ResumeBuilder = ({ setResult, darkMode }) => {
               type="text"
               required
               name="currentTechnologies"
-              className=" w-full "
+              className={` ${
+                darkMode ? "border-[#ffffffb8]" : "border-black"
+              }  w-full bg-transparent border-b-2 border-[#ffffffb8]  focus:outline-none`}
               value={currentTechnologies}
               onChange={(e) => setCurrentTechnologies(e.target.value)}
             />
@@ -144,6 +152,9 @@ const ResumeBuilder = ({ setResult, darkMode }) => {
                   type="text"
                   name="name"
                   required
+                  className={` ${
+                    darkMode ? "border-[#ffffffb8]" : "border-black"
+                  } bg-transparent border-b-2 border-[#ffffffb8]  focus:outline-none`}
                   onChange={(e) => handleUpdateCompany(e, index)}
                 />
               </div>
@@ -153,6 +164,9 @@ const ResumeBuilder = ({ setResult, darkMode }) => {
                   type="text"
                   name="position"
                   required
+                  className={` ${
+                    darkMode ? "border-[#ffffffb8]" : "border-black"
+                  }  bg-transparent border-b-2 border-[#ffffffb8]  focus:outline-none`}
                   onChange={(e) => handleUpdateCompany(e, index)}
                 />
               </div>
@@ -183,7 +197,9 @@ const ResumeBuilder = ({ setResult, darkMode }) => {
               id="photo"
               accept="image/x-png,image/jpeg"
               onChange={(e) => setHeadshot(e.target.files[0])}
-              className=" w-full border-none p-0 mt-3 "
+              className={` ${
+                darkMode ? "border-[#ffffffb8]" : "border-black"
+              }  w-full border-none p-0 mt-3 bg-transparent border-b-2 border-[#ffffffb8]  focus:outline-none`}
             />
           </div>
           <div className=" flex items-center justify-center">
