@@ -1,71 +1,41 @@
-const express = require("express");
-const router = express.Router();
-const openai = require("../openAI/openapi");
-const Chat = require("../models/chatModel");
+import { Router } from "express";
+const router = Router();
+import axios from "axios";
+import env from "dotenv";
+env.config();
 
 router.post("/chat", async (req, res) => {
   try {
-    const { question, email } = req.body;
+    const { question } = req.body;
+    const response = await axios.post(
+      "https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1",
+      {
+        inputs: question,
+        parameters: {
+          temperature: 1.0,
+          max_new_tokens: 800,
+          return_full_text: false,
+          max_time: 10,
+        },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.HUGFACE_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-    openai
-      .createCompletion({
-        model: "text-davinci-003",
-        prompt: question,
-        max_tokens: 1000,
-        temperature: 0,
-      })
-      .then((response) => {
-        console.log(response?.data?.choices?.[0]?.text);
-        return response?.data?.choices?.[0]?.text;
-      })
-      .then((answer) => {
-        const array = answer
-          ?.split("\n")
-          .filter((value) => value)
-          .map((value) => value.trim());
+    const answer = response.data[0].generated_text;
+    const array = answer
+      ?.split("\n")
+      .filter((value) => value.length >= 4)
+      .map((value) => value.trim());
 
-        return array;
-      })
-      .then((answer) => {
-        if (email != null) {
-          new Chat({
-            emailAddress: email,
-            userchat: question,
-            botchat: answer[0],
-          }).save();
-        }
-        res.json({
-          answer: answer,
-          prompt: question,
-        });
-      })
-      .catch((error) => {
-        res.status(error.statusCode || 500).json({
-          success: false,
-          message: error.message,
-        });
-      });
-  } catch (error) {
-    res.status(error.statusCode || 500).json({
-      success: false,
-      message: error.message,
+    res.json({
+      answer: array,
+      prompt: question,
     });
-  }
-
-  //   console.log({ question });
-});
-
-router.get("/getChats", async (req, res) => {
-  try {
-    const { email } = req.body;
-    if (email == null) {
-      res.status(200);
-    } else {
-      let chatlist = await Chat.find({ emailAddress: email });
-      res.json({
-        list: chatlist,
-      });
-    }
   } catch (error) {
     res.status(error.statusCode || 500).json({
       success: false,
@@ -74,4 +44,4 @@ router.get("/getChats", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
