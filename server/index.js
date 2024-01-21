@@ -1,5 +1,4 @@
 import express, { json } from "express";
-import { connect } from "mongoose";
 import env from "dotenv";
 import cors from "cors";
 import askRoutes from "./routes/askRoutes.js";

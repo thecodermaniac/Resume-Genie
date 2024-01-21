@@ -143,15 +143,12 @@ router.post(
 
       const resumeData = { objective, keypoints, jobResponsibilities };
       const data = { ...newEntry, ...resumeData };
-      console.log(data);
       if (data == null) {
         throw {
           statusCode: 400,
           message: "something went wrong",
         };
       }
-      // database.push(data);
-
       res.json({
         message: "Request successful!",
         data,
@@ -162,8 +159,6 @@ router.post(
         message: error.message,
       });
     }
-
-    // database.push(data);
   }
 );
 
