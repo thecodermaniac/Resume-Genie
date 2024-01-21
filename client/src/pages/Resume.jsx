@@ -8,6 +8,7 @@ const Resume = ({ result, darkMode }) => {
     content: () => componentRef.current,
     documentTitle: `${result.fullName} Resume`,
     onAfterPrint: () => alert("Print Successful!"),
+    onPrintError: () => alert("Resume Not Printed :)"),
   });
 
   // if (JSON.stringify(result) === "{}") {
@@ -71,12 +72,12 @@ const Resume = ({ result, darkMode }) => {
             <h2 className={`mb-0 font-semibold text-2xl text-black`}>
               PROFILE SUMMARY
             </h2>
-            <p
-              dangerouslySetInnerHTML={{
+            <p className="resumeBodyContent text-black">
+              {result.objective}
+              {/* dangerouslySetInnerHTML={{
                 __html: replaceWithBr(result.objective),
-              }}
-              className="resumeBodyContent text-black"
-            />
+              }} */}
+            </p>
           </div>
           <div>
             <h2 className=" font-semibold text-2xl mb-2 text-black">

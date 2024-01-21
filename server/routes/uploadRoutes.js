@@ -1,21 +1,21 @@
-const express = require("express");
-const router = express.Router();
-const path = require("path");
-const multer = require("multer");
-const openai = require("../openAI/openapi");
-const fs = require("fs");
+import { Router } from "express";
+const router = Router();
+import { extname } from "path";
+import multer, { diskStorage } from "multer";
+import { existsSync, mkdirSync } from "fs";
+import axios from "axios";
 const generateID = () => Math.random().toString(36).substring(2, 10);
 //mutler configure
 
-const storage = multer.diskStorage({
+const storage = diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
-    if (!fs.existsSync("uploads")) {
-      fs.mkdirSync("uploads");
+    if (!existsSync("uploads")) {
+      mkdirSync("uploads");
     }
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
+    cb(null, Date.now() + extname(file.originalname));
   },
 });
 const upload = multer({
@@ -24,17 +24,82 @@ const upload = multer({
 
 //mutler configure
 
-const ChatGPTFunction = async (text) => {
-  const response = await openai.createCompletion({
-    model: "text-davinci-003",
-    prompt: text,
-    temperature: 0.6,
-    max_tokens: 250,
-    top_p: 1,
-    frequency_penalty: 1,
-    presence_penalty: 1,
-  });
-  return response.data.choices[0].text;
+const getObjective = async (text) => {
+  const response = await axios.post(
+    "https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1",
+    {
+      inputs: text,
+      parameters: {
+        temperature: 1.0,
+        max_new_tokens: 250,
+        return_full_text: false,
+        max_time: 10,
+      },
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.HUGFACE_KEY}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response.data[0].generated_text;
+};
+
+const getKeyPoints = async (text) => {
+  const response = await axios.post(
+    "https://api-inference.huggingface.co/models/tiiuae/falcon-7b-instruct",
+    {
+      inputs: text,
+      parameters: {
+        temperature: 0.6,
+        repetition_penalty: 1,
+        max_new_tokens: 250,
+        return_full_text: false,
+      },
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.HUGFACE_KEY}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const answer = response.data[0].generated_text;
+  const array = answer
+    ?.split("\n")
+    .filter((value) => value.length >= 4)
+    .map((value) => value.trim());
+
+  return array.join("\n");
+};
+
+const getKeyResponsibilities = async (text) => {
+  const response = await axios.post(
+    "https://api-inference.huggingface.co/models/tiiuae/falcon-7b-instruct",
+    {
+      inputs: text,
+      parameters: {
+        temperature: 0.6,
+        repetition_penalty: 1,
+        max_new_tokens: 250,
+        return_full_text: false,
+      },
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.HUGFACE_KEY}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const answer = response.data[0].generated_text;
+  const array = answer
+    ?.split("\n")
+    .filter((value) => value.length >= 4)
+    .map((value) => value.trim());
+
+  return array.join("\n");
 };
 
 router.post(
@@ -60,11 +125,8 @@ router.post(
         currentTechnologies,
         workHistory: workArray,
       };
-
-      const prompt1 = `I am writing a resume, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n I write in the technolegies: ${currentTechnologies}. Can you write a 100 words description for the top of the resume(first person writing)?`;
-
-      const prompt2 = `I am writing a resume, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n I write in the technolegies: ${currentTechnologies}. Can you write 10 points for a resume on what I am good at?`;
-
+      const question1 = `I am writing a resume, my details are name: ${fullName}: ${currentPosition} (${currentLength} years). I use technolegies like ${currentTechnologies}. Write a 100 words description for the top of the resume in first person`;
+      const question2 = `I am writing a resume, my details are  name: ${fullName}  role: ${currentPosition} (${currentLength} years). I use technolegies like ${currentTechnologies}.Write 10 points for a resume of my skills in first person`;
       const remainderText = () => {
         let stringText = "";
         for (let i = 0; i < workArray.length; i++) {
@@ -72,17 +134,16 @@ router.post(
         }
         return stringText;
       };
-
-      const prompt3 = `I am writing a resume, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n During my years I worked at ${
+      const question3 = `I am writing a resume, my work experience is as follow :- During my years I worked at ${
         workArray.length
-      } companies. ${remainderText()} \n Can you write me 50 words for each company seperated in numbers of my succession in the company (in first person)?`;
+      } companies. ${remainderText()}. Write me 50 words for each company for the responsibilities I handled in respective role in first person`;
+      const objective = await getObjective(question1);
+      const keypoints = await getKeyPoints(question2);
+      const jobResponsibilities = await getKeyResponsibilities(question3);
 
-      const objective = await ChatGPTFunction(prompt1);
-      const keypoints = await ChatGPTFunction(prompt2);
-      const jobResponsibilities = await ChatGPTFunction(prompt3);
-
-      const chatgptData = { objective, keypoints, jobResponsibilities };
-      const data = { ...newEntry, ...chatgptData };
+      const resumeData = { objective, keypoints, jobResponsibilities };
+      const data = { ...newEntry, ...resumeData };
+      console.log(data);
       if (data == null) {
         throw {
           statusCode: 400,
@@ -106,4 +167,4 @@ router.post(
   }
 );
 
-module.exports = router;
+export default router;
