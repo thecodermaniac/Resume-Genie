@@ -36,6 +36,7 @@ const AskMe = () => {
       })
       .then((response) => {
         updateQNA(AI, response.data.answer);
+        inputRef.current.value = "";
       })
       .finally(() => {
         setLoading(false);

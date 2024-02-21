@@ -1,18 +1,19 @@
-const express = require("express");
-const router = express.Router();
-const path = require("path");
-const openai = require("../openAI/openapi");
-const multer = require("multer");
-const fs = require("fs");
-const pdf = require("pdf-parse");
+import { Router } from "express";
+const router = Router();
+import axios from "axios";
+import env from "dotenv";
+env.config();
+import multer, { diskStorage } from "multer";
+import path from "path";
+import { existsSync, mkdirSync, readFileSync, unlinkSync } from "fs";
+import pdf from "pdf-parse-fork";
 
-const storage = multer.diskStorage({
+const storage = diskStorage({
   destination: (req, file, cb) => {
     cb(null, "pdfUploads");
-    if (!fs.existsSync("pdfUploads")) {
-      fs.mkdirSync('pdfUploads')
+    if (!existsSync("pdfUploads")) {
+      mkdirSync("pdfUploads");
     }
-    
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -22,48 +23,66 @@ const upload = multer({
   storage: storage,
 });
 
+function createText(resumeText) {
+  let tempArr = resumeText
+    ?.split("\n")
+    .filter((value) => value.length >= 4)
+    .map((value) => value.trim());
+  return tempArr.join(" ");
+}
+
 router.post("/resume/analyse", upload.single("pdffile"), async (req, res) => {
   try {
-    console.log(req.file.filename);
-    console.log(path.join("pdfUploads", req.file.filename));
     var pathvalue = path.join("pdfUploads", req.file.filename);
-    let dataBuffer = fs.readFileSync(pathvalue);
-    pdf(dataBuffer).then(function (data) {
-      // console.log(data.text)
+    let dataBuffer = readFileSync(pathvalue);
+    const pdfData = await pdf(dataBuffer);
+    const question = `Give me review of this resume: '${createText(
+      pdfData.text
+    )}' `;
+    unlinkSync(pathvalue);
+    const response = await axios.post(
+      "https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1",
+      {
+        inputs: question,
+        parameters: {
+          temperature: 1,
+          max_new_tokens: 200,
+          return_full_text: false,
+          max_time: 10,
+        },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.HUGFACE_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-      // openai code goes here
+    console.log(
+      "sent",
+      {
+        inputs: question,
+        parameters: {
+          temperature: 1,
+          max_new_tokens: 200,
+          return_full_text: false,
+          max_time: 10,
+        },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.HUGFACE_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-      openai
-        .createCompletion({
-          model: "text-davinci-003",
-          prompt: "Give me review of this resume: " + data.text,
-          max_tokens: 1000,
-          temperature: 0,
-        })
-        .then((response) => {
-          console.log(response?.data?.choices?.[0]?.text);
-          return response?.data?.choices?.[0]?.text;
-        })
-        .then((answer) => {
-          const array = answer
-            ?.split("\n")
-            .filter((value) => value)
-            .map((value) => value.trim());
+    const answer = response.data[0].generated_text;
 
-          return array;
-        })
-        .then((answer) => {
-          console.log(answer);
-          res.json({
-            answer: answer,
-          });
-        })
-        .catch((error) => {
-          res.status(error.statusCode || 500).json({
-            success: false,
-            message: error.message,
-          });
-        });
+    res.json({
+      answer: createText(answer),
+      prompt: question,
     });
   } catch (error) {
     res.status(error.statusCode || 500).json({
@@ -73,4 +92,4 @@ router.post("/resume/analyse", upload.single("pdffile"), async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

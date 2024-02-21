@@ -21,6 +21,9 @@ const ResumeAnalyse = ({ darkMode }) => {
       .catch((err) => {
         setLoading(false);
         alert(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
   return (
@@ -33,13 +36,13 @@ const ResumeAnalyse = ({ darkMode }) => {
         </p>
       </div>
       <div className=" flex items-center justify-center h-screen flex-col">
-        <div className={` flex flex-col px-40 rounded-md py-20  `}>
+        <div className=" flex flex-col px-40 rounded-md py-20 items-center">
           <label
             for="choose-file"
             className=" px-1 py-1 font-semibold md:text-xl border-0 cursor-pointer border-b-2 border-gray-900 hover:text-teal-500 transition-all duration-500 ease-in-out"
           >
             <h1 className=" flex items-center gap-4 ">
-              Choose File
+              {headshot?.name === undefined ? "Choose File" : headshot?.name}
               <AiOutlineCloudUpload className=" text-2xl" />
             </h1>
           </label>
@@ -51,7 +54,7 @@ const ResumeAnalyse = ({ darkMode }) => {
           />
           <button
             onClick={handleUpload}
-            className=" py-2 px-7 bg-teal-600 mt-10 rounded-md"
+            className=" py-2 px-7 bg-teal-600 mt-10 rounded-md w-fit"
           >
             Upload
           </button>
