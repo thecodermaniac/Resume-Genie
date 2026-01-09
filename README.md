@@ -9,3 +9,4 @@
 ![image](https://user-images.githubusercontent.com/79108244/227265335-145b9806-3ecd-4a8f-b002-d4ec7416939c.png)
 
 Node version used:- v20.19.6 (npm v10.8.2)
+To run the app:- docker-compose up --build

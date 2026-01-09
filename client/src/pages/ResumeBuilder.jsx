@@ -6,7 +6,7 @@ import { IoIosAddCircle } from "react-icons/io";
 import { AiFillMinusCircle } from "react-icons/ai";
 
 import Loading from "../components/Loader";
-
+const apiBase = process.env.REACT_APP_API_URL;
 const ResumeBuilder = ({ setResult, darkMode }) => {
   const [fullName, setFullName] = useState("");
   const [currentPosition, setCurrentPosition] = useState("");
@@ -42,7 +42,7 @@ const ResumeBuilder = ({ setResult, darkMode }) => {
     formData.append("currentTechnologies", currentTechnologies);
     formData.append("workHistory", JSON.stringify(companyInfo));
     axios
-      .post("http://localhost:3001/resume/create", formData, {})
+      .post(`${apiBase}/resume/create`, formData, {})
       .then((res) => {
         if (res.data.message) {
           setResult(res.data.data);

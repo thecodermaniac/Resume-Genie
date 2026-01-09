@@ -1,0 +1,47 @@
+services:
+  # --- BACKEND SERVICE ---
+  server:
+    build: ./server
+    container_name: resume_backend
+    ports:
+      - "3001:3001"
+    
+    # 1. Load Environment Variables from root .env
+    env_file:
+      - .env
+    
+    # 2. Hot Reloading Magic
+    # We mount your actual code folder INTO the container.
+    # Changes on your laptop reflect instantly inside.
+    volumes:
+      - ./server:/app
+      - /app/node_modules # Prevent host node_modules from overwriting container's
+    
+    # 3. Command Override
+    # Uses nodemon for auto-restart (make sure nodemon is in devDependencies)
+    command: npm run dev
+
+  # --- FRONTEND SERVICE ---
+  client:
+    build: ./client
+    container_name: resume_frontend
+    ports:
+      - "3000:3000"       # Use 5173:5173 if using Vite
+    
+    # Environment Variables for the Browser
+    environment:
+      # Since React runs in the browser, it must talk to "localhost", not "server"
+      - REACT_APP_API_URL=http://localhost:3001
+      - VITE_API_URL=http://localhost:3001
+      - CHOKIDAR_USEPOLLING=true # Essential for hot reload on Windows/Mac
+    
+    # Hot Reloading Magic for Frontend
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    
+    # Fix for React/CRA exiting immediately
+    stdin_open: true
+    tty: true
+    
+    command: npm start    # or 'npm run dev' for Vite

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import axios from "axios";
 import Loading from "../components/Loader";
-
+const apiBase = process.env.REACT_APP_API_URL;
 const ResumeAnalyse = ({ darkMode }) => {
   const [loading, setLoading] = useState(false);
   const [headshot, setHeadshot] = useState(null);
@@ -12,7 +12,7 @@ const ResumeAnalyse = ({ darkMode }) => {
     const dataForm = new FormData();
     dataForm.append("pdffile", headshot, headshot.name);
     axios
-      .post("http://localhost:3001/resume/analyse", dataForm)
+      .post(`${apiBase}/resume/analyse`, dataForm)
       .then((res) => {
         setAns(res?.data?.answer);
         console.log(res?.data?.answer);

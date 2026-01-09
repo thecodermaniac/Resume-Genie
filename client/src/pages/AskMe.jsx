@@ -6,6 +6,8 @@ import "./AskMe.css";
 const YOU = "you";
 const AI = "ai";
 
+const apiBase = process.env.REACT_APP_API_URL;
+
 const AskMe = () => {
   const chatWindowRef = useRef(null);
 
@@ -31,7 +33,7 @@ const AskMe = () => {
     setLoading(true);
 
     axios
-      .post("http://localhost:3001/chat", {
+      .post(`${apiBase}/chat`, {
         question,
       })
       .then((response) => {
