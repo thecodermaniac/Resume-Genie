@@ -1,47 +1,66 @@
 import { Router } from "express";
+import multer from "multer";
+import path from "path";
+import { existsSync, mkdirSync } from "fs";
+
+import { extractPdfText } from "../utils/pdfParser.js";
+import { cleanupFile } from "../utils/cleanupFile.js";
+import { chatResume } from "../services/resume/chatResume.js";
+
 const router = Router();
-import axios from "axios";
-import env from "dotenv";
-env.config();
 
-router.post("/chat", async (req, res) => {
-  try {
-    const { question } = req.body;
-    const response = await axios.post(
-      "https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1",
-      {
-        inputs: question,
-        parameters: {
-          temperature: 1.0,
-          max_new_tokens: 800,
-          return_full_text: false,
-          max_time: 10,
-        },
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.HUGFACE_KEY}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    const answer = response.data[0].generated_text;
-    const array = answer
-      ?.split("\n")
-      .filter((value) => value.length >= 4)
-      .map((value) => value.trim());
-
-    res.json({
-      answer: array,
-      prompt: question,
-    });
-  } catch (error) {
-    res.status(error.statusCode || 500).json({
-      success: false,
-      message: error.message,
-    });
+/* ---------- Multer setup ---------- */
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    if (!existsSync("pdfUploads")) {
+      mkdirSync("pdfUploads");
+    }
+    cb(null, "pdfUploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
   }
 });
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB
+});
+
+/* ---------- Route ---------- */
+router.post(
+  "/resume/chat",
+  upload.single("resume"),
+  async (req, res) => {
+    let filePath;
+
+    try {
+      const { question } = req.body;
+
+      if (!req.file || !question) {
+        return res.status(400).json({
+          message: "Resume file and question are required"
+        });
+      }
+
+      filePath = req.file.path;
+
+      const resumeText = await extractPdfText(filePath);
+
+      const result = await chatResume({
+        resumeText,
+        question
+      });
+
+      res.json(result);
+    } catch (err) {
+      res.status(500).json({
+        message: err.message || "Failed to process resume query"
+      });
+    } finally {
+      if (filePath) cleanupFile(filePath);
+    }
+  }
+);
 
 export default router;
