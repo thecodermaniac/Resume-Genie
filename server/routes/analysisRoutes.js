@@ -15,8 +15,8 @@ router.post(
         });
       }
 
-      const result = await analyzeResume(req.file.path);
-
+      const jobDescription = req.body.jobDescription || "";
+      const result = await analyzeResume(req.file.path, jobDescription);
       res.json(result);
     } catch (err) {
       res.status(400).json({
