@@ -30,48 +30,48 @@ Job Description:
 Return ONLY valid JSON in the exact structure below.
 Do NOT include markdown, comments, or explanations outside JSON.
 
-{
+{{
   "summary": "",
   "strengths": [],
   "improvements": [],
   "roleFit": [],
 
-  "atsScore": {
+  "atsScore": {{
     "score": 0,
     "reasoning": ""
-  },
+  }},
 
-  "seniority": {
+  "seniority": {{
     "level": "Junior | Mid | Senior",
     "reasoning": ""
-  },
+  }},
 
-  "jobMatch": {
+  "jobMatch": {{
     "matchScore": 0,
     "matchedSkills": [],
     "missingSkills": []
-  },
+  }},
 
-  "jobSpecificScore": {
+  "jobSpecificScore": {{
     "score": 0,
     "criticalGaps": [],
     "reasoning": ""
-  },
+  }},
 
   "resumeRewriteSuggestions": [
-    {
+    {{
       "section": "",
       "suggestion": ""
-    }
+    }}
   ],
 
   "pdfAnnotations": [
-    {
+    {{
       "section": "",
       "comment": ""
-    }
+    }}
   ]
-}
+}}
 
 Rules and Evaluation Criteria:
 
