@@ -1,9 +1,45 @@
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 
-export const BUILD_RESUME_PROMPT = ChatPromptTemplate.fromMessages([
-  ["system", "You are a professional resume writer. Be realistic and concise."],
-  ["human", "{input}"],
+export const RESUME_BUILD_JSON_PROMPT = ChatPromptTemplate.fromMessages([
+  [
+    "system",
+    "You are a professional resume writer. "
+    + "Generate realistic, concise resumes. "
+    + "Do NOT exaggerate. "
+    + "Return ONLY valid JSON."
+  ],
+  [
+    "human",
+    `
+Candidate Details:
+Name: {name}
+Role: {role}
+Experience: {experience} years
+Tech Stack: {techStack}
+
+Work History:
+{workHistory}
+
+Return JSON in this exact format:
+{{
+  "profile": {{
+    "name": "",
+    "role": "",
+    "experienceYears": 0
+  }},
+  "objective": "",
+  "skills": [],
+  "experience": [
+    {{
+      "company": "",
+      "responsibilities": []
+    }}
+  ]
+}}
+`
+  ]
 ]);
+
 
 export const RESUME_CHAT_PROMPT = ChatPromptTemplate.fromMessages([
   ["system", "Answer strictly from the given resume. Do not guess."],
