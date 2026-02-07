@@ -22,7 +22,7 @@ const GradientBlob = ({
 
   return (
     <div 
-      className={`absolute rounded-full bg-gradient-to-b to-transparent -z-10 pointer-events-none ${colors[color]} ${sizes[size]} ${className} ${position}`} 
+      className={`absolute rounded-full bg-gradient-to-b to-transparent pointer-events-none ${colors[color]} ${sizes[size]} ${className} ${position}`} 
     />
   );
 };

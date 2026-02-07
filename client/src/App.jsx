@@ -1,11 +1,19 @@
-import GradientBlob from "./components/visuals/GradientBlob";
+import Navbar from "./components/layout/Navbar";
+import Hero from "./components/features/landing/Hero";
+import FeaturesSection from "./components/features/landing/FeaturesSection";
+import PricingSection from "./components/features/landing/PricingSection";
+import Footer from "./components/layout/Footer";
+
 
 function App() {
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <GradientBlob color="emerald" position="top-0 left-1/2" size="lg" />
-    </>
+    <div className="min-h-screen bg-white font-sans text-gray-900">
+      <Navbar />
+      <Hero />
+      <FeaturesSection />
+      <PricingSection />
+      <Footer />
+    </div>
   );
 }
 
