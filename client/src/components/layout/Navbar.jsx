@@ -1,4 +1,5 @@
 import Button from "../ui/Button";
+import { Link } from "react-router-dom";
 
 const Navbar = () => (
   <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
@@ -8,7 +9,7 @@ const Navbar = () => (
         <span className="font-bold text-gray-800 text-xl tracking-tight">CareerPath AI</span>
       </div>
       <div className="hidden md:flex gap-8 text-gray-500 font-medium">
-        <a href="#home" className="hover:text-emerald-600 transition-colors">Home</a>
+        <Link to="/" className="hover:text-emerald-600 transition-colors">Home</Link>
         <a href="#features" className="hover:text-emerald-600 transition-colors">Features</a>
         <a href="#pricing" className="hover:text-emerald-600 transition-colors">Pricing</a>
       </div>

@@ -1,17 +1,20 @@
 import Navbar from "./components/layout/Navbar";
-import Hero from "./components/features/landing/Hero";
-import FeaturesSection from "./components/features/landing/FeaturesSection";
-import PricingSection from "./components/features/landing/PricingSection";
+import Homepage from "./pages/Homepage";
 import Footer from "./components/layout/Footer";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
+import ResumeQnAPage from "./pages/ResumeQnAPage";
 
 
 function App() {
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900">
       <Navbar />
-      <Hero />
-      <FeaturesSection />
-      <PricingSection />
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/resume-qna" element={<ResumeQnAPage />} />
+      </Routes>
+      
       <Footer />
     </div>
   );
