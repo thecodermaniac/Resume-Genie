@@ -10,8 +10,8 @@ const Navbar = () => (
       </div>
       <div className="hidden md:flex gap-8 text-gray-500 font-medium">
         <Link to="/" className="hover:text-emerald-600 transition-colors">Home</Link>
-        <a href="#features" className="hover:text-emerald-600 transition-colors">Features</a>
-        <a href="#pricing" className="hover:text-emerald-600 transition-colors">Pricing</a>
+        <Link to="/#features" className="hover:text-emerald-600 transition-colors">Features</Link>
+        <Link to="/#pricing" className="hover:text-emerald-600 transition-colors">Pricing</Link>
       </div>
       <div className="flex gap-4">
         <Button variant="secondary" onClick={() => alert("Login functionality coming soon!")}>
