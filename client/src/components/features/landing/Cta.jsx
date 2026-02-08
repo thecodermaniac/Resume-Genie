@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Button from "../../ui/Button";
 import { ArrowRight } from "lucide-react";
 
@@ -18,7 +19,9 @@ const Cta = () => {
         </p>
         <div className="flex justify-center">
           <Button className="px-12 py-5 text-lg">
-            Build My Resume for Free <ArrowRight />
+            <Link to="/analysis" className="flex items-center gap-2">
+            Start Analysis for Free <ArrowRight />
+            </Link>
           </Button>
         </div>
       </div>

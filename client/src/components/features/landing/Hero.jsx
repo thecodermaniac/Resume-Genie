@@ -1,6 +1,7 @@
-import { CheckCircle2, FileText, MessageSquare, PenTool } from "lucide-react";
+import { FileText, MessageSquare, PenTool } from "lucide-react";
 import GradientBlob from "../../visuals/GradientBlob";
 import Button from "../../ui/Button";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -88,7 +89,9 @@ const Hero = () => {
 
       <div className="flex flex-col md:flex-row justify-center gap-4 mb-20">
         <Button className="px-10 py-4 text-lg">
+          <Link to="/builder"> 
           Start Building Free
+          </Link>
         </Button>
         <Button variant="secondary" className="px-10 py-4 text-lg">
           See It In Action

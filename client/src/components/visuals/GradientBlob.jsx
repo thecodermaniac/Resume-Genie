@@ -17,7 +17,7 @@ const GradientBlob = ({
   const sizes = {
     sm: "w-[300px] h-[300px] blur-[60px]",
     md: "w-[500px] h-[500px] blur-[80px]",
-    lg: "w-[800px] h-[600px] blur-[100px]",
+    lg: "w-1/2 h-full blur-[100px]",
   };
 
   return (
