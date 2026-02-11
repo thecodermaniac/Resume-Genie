@@ -42,8 +42,19 @@ Return JSON in this exact format:
 
 
 export const RESUME_CHAT_PROMPT = ChatPromptTemplate.fromMessages([
-  ["system", "Answer strictly from the given resume. Do not guess."],
-  ["human", "Resume:\n{resume}\n\nQuestion:\n{question}"],
+  [
+    "system",
+    "You are a resume assistant. "
+    + "Answer strictly from the provided resume. "
+    + "Return plain text only. "
+    + "Do NOT return HTML. "
+    + "Do NOT return markdown code blocks. "
+    + "Do NOT include <div>, <html>, or any markup."
+  ],
+  [
+    "human",
+    "Resume:\n{resume}\n\nQuestion:\n{question}"
+  ]
 ]);
 
 export const RESUME_ANALYSIS_JSON_PROMPT = ChatPromptTemplate.fromMessages([
