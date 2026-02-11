@@ -6,9 +6,11 @@ export async function chatResume({ resumeText, question }) {
   const chain = RESUME_CHAT_PROMPT.pipe(llm);
 
   const result = await chain.invoke({
-    resume: resumeText.slice(0, 5000),
+    resume: resumeText,
     question
   });
 
-  return { answer: result.content };
+  return {
+    answer: result.content
+  };
 }

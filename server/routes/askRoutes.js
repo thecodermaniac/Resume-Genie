@@ -1,66 +1,65 @@
 import { Router } from "express";
-import multer from "multer";
-import path from "path";
-import { existsSync, mkdirSync } from "fs";
-
+import { pdfUpload } from "../utils/pdfUpload.js";
 import { extractPdfText } from "../utils/pdfParser.js";
 import { cleanupFile } from "../utils/cleanupFile.js";
 import { chatResume } from "../services/resume/chatResume.js";
 
 const router = Router();
 
-/* ---------- Multer setup ---------- */
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    if (!existsSync("pdfUploads")) {
-      mkdirSync("pdfUploads");
+/* -------------------------------
+   1️⃣  Parse Resume
+-------------------------------- */
+
+router.post("/resume/parse", pdfUpload.single("resume"), async (req, res, next) => {
+  let filePath;
+
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        message: "Resume PDF is required"
+      });
     }
-    cb(null, "pdfUploads");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
+
+    filePath = req.file.path;
+
+    const resumeText = await extractPdfText(filePath);
+
+    res.json({
+      resumeText: resumeText.slice(0, 8000) // safety cap
+    });
+
+  } catch (err) {
+    next(err);
+  } finally {
+    if (filePath) cleanupFile(filePath);
   }
 });
 
-const upload = multer({
-  storage,
-  limits: { fileSize: 5 * 1024 * 1024 } // 5MB
-});
 
-/* ---------- Route ---------- */
-router.post(
-  "/resume/chat",
-  upload.single("resume"),
-  async (req, res) => {
-    let filePath;
+/* -------------------------------
+   2️⃣  Resume Q&A
+-------------------------------- */
 
-    try {
-      const { question } = req.body;
-
-      if (!req.file || !question) {
-        return res.status(400).json({
-          message: "Resume file and question are required"
-        });
-      }
-
-      filePath = req.file.path;
-
-      const resumeText = await extractPdfText(filePath);
-
-      const result = await chatResume({
-        resumeText,
-        question
+router.post("/resume/chat", async (req, res, next) => {
+  try {
+    const { resumeText, question } = req.body;
+    console.log("Received chat request:", { resumeTextLength: resumeText?.length, question });
+    if (!resumeText || !question) {
+      return res.status(400).json({
+        message: "resumeText and question are required"
       });
-
-      res.json(result);
-    } catch (err) {
-      res.status(500).json({
-        message: err.message || "Failed to process resume query"
-      });
-    } finally {
-      if (filePath) cleanupFile(filePath);
     }
+
+    const result = await chatResume({
+      resumeText: resumeText.slice(0, 6000), // token guard
+      question
+    });
+
+    res.json(result);
+
+  } catch (err) {
+    next(err);
   }
-);
+});
 
 export default router;
