@@ -36,6 +36,7 @@ const Hero = () => {
         {[
           {
             title: "Resume Q&A",
+            link: "/resume-qna",
             desc: "Ask our AI specific questions about your resume gaps and strengths.",
             icon: <MessageSquare className="w-6 h-6 text-emerald-600" />,
             accent:
@@ -43,19 +44,22 @@ const Hero = () => {
           },
           {
             title: "Career Analysis",
+            link: "/analysis",
             desc: "Get expert scoring and detailed actionable feedback instantly.",
             icon: <FileText className="w-6 h-6 text-blue-500" />,
             accent: "group-hover:border-blue-200 group-hover:shadow-blue-100",
           },
           {
             title: "Resume Builder",
+            link: "/builder",
             desc: "Create a perfectly formatted resume from scratch with our wizard.",
             icon: <PenTool className="w-6 h-6 text-orange-500" />,
             accent:
               "group-hover:border-orange-200 group-hover:shadow-orange-100",
           },
         ].map((feature, idx) => (
-          <div
+          <Link
+            to={feature.link}
             key={idx}
             className={`
                     group relative p-8 bg-white/60 backdrop-blur-lg 
@@ -79,7 +83,7 @@ const Hero = () => {
             </p>
 
             <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-gray-50 to-transparent rounded-tr-3xl -z-10 group-hover:from-gray-100 transition-colors"></div>
-          </div>
+          </Link>
         ))}
       </div>
 
@@ -89,8 +93,8 @@ const Hero = () => {
 
       <div className="flex flex-col md:flex-row justify-center gap-4 mb-20">
         <Button className="px-10 py-4 text-lg">
-          <Link to="/builder"> 
-          Start Building Free
+          <Link to="/builder">
+            Start Building Free
           </Link>
         </Button>
         <Button variant="secondary" className="px-10 py-4 text-lg">

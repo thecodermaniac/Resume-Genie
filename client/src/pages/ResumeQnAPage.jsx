@@ -140,7 +140,7 @@ const ResumeQnAPage = () => {
     <div className="flex-1 flex gap-6 px-6 pb-6 max-w-7xl mx-auto w-full">
 
       {/* LEFT PANEL */}
-      <div className="w-5/12 bg-white rounded-3xl shadow-sm border border-gray-200 flex flex-col">
+      <div className="w-5/12 bg-white rounded-3xl shadow-sm border border-gray-200 max-h-screen flex flex-col">
 
         <div className="h-12 border-b border-gray-100 flex items-center px-4 justify-between bg-gray-50/50">
           <span className="text-xs font-semibold text-gray-400">
@@ -158,7 +158,7 @@ const ResumeQnAPage = () => {
           )}
         </div>
 
-        <div className="flex-1 max-h-full overflow-y-auto bg-gray-100/50 relative">
+        <div className="flex-1  overflow-y-auto bg-gray-100/50 relative">
 
           {/* Upload State */}
           {!resumeText && !uploading && (
