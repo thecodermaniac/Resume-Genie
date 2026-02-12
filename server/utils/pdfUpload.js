@@ -2,7 +2,6 @@ import multer from "multer";
 import path from "path";
 import { existsSync, mkdirSync } from "fs";
 
-const PDF_MIME_TYPES = ["application/pdf"];
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -18,18 +17,13 @@ const storage = multer.diskStorage({
 
 export const pdfUpload = multer({
   storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+  limits: {
+    fileSize: 5 * 1024 * 1024
+  },
   fileFilter: (req, file, cb) => {
-    const isPdfMime = PDF_MIME_TYPES.includes(file.mimetype);
-    const isPdfExt = path.extname(file.originalname).toLowerCase() === ".pdf";
-
-    if (!isPdfMime || !isPdfExt) {
-      return cb(
-        new Error("Only PDF files are allowed"),
-        false
-      );
+    if (file.mimetype !== "application/pdf") {
+      return cb(new Error("Only PDF files are allowed"));
     }
-
     cb(null, true);
   }
 });

@@ -20,6 +20,10 @@ app.use("/uploads", express.static("uploads"));
 app.use(askRoutes);
 app.use(uploadRoutes);
 app.use(analysisRoutes);
+app.use((err, req, res, next) => {
+  console.error("GLOBAL ERROR:", err);
+  res.status(500).json({ message: err.message });
+}); 
 
 app.get("/health", (_req, res) => {
   res.json({ status: "ok" });
