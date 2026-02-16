@@ -9,13 +9,14 @@ router.post(
   pdfUpload.single("resume"),
   async (req, res) => {
     try {
-      if (!req.file) {
+      const jobDescription = req.body.jobDescription;
+      if (!req.file || !jobDescription) {
         return res.status(400).json({
-          message: "PDF resume file is required"
+          message: "PDF resume file and job description are required"
         });
       }
 
-      const jobDescription = req.body.jobDescription || "";
+      
       const result = await analyzeResume(req.file.path, jobDescription);
       res.json(result);
     } catch (err) {

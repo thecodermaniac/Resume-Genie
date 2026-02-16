@@ -72,7 +72,7 @@ const AnalysisPage = () => {
       {!analysis && !loading && (
         <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 space-y-6">
           <textarea
-            placeholder="Optional: Paste Job Description..."
+            placeholder="Job Description of the role you're applying for (required)"
             value={jobDescription}
             onChange={(e) => setJobDescription(e.target.value)}
             className="w-full h-32 p-4 border rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-400"
@@ -80,6 +80,7 @@ const AnalysisPage = () => {
 
           <button
             onClick={() => fileInputRef.current.click()}
+            disabled={!jobDescription}
             className="flex items-center gap-3 px-6 py-3 bg-emerald-500 text-white rounded-xl shadow hover:bg-emerald-600 transition"
           >
             <Upload size={20} />
