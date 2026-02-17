@@ -20,7 +20,15 @@ Tech Stack: {techStack}
 Work History:
 {workHistory}
 
-Return JSON in this exact format:
+IMPORTANT:
+For each work entry include:
+- company
+- role
+- duration
+- responsibilities (as bullet list array)
+
+Return JSON in this EXACT format:
+
 {{
   "profile": {{
     "name": "",
@@ -32,10 +40,12 @@ Return JSON in this exact format:
   "experience": [
     {{
       "company": "",
+      "role": "",
+      "duration": "",
       "responsibilities": []
-    }}
+  }}
   ]
-}}
+  }}
 `
   ]
 ]);

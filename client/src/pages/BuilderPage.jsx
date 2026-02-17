@@ -1,125 +1,394 @@
+import { useState } from "react";
 import Button from "../components/ui/Button";
 
+const steps = ["Basics", "Work History", "Skills", "Finalize"];
+
 const BuilderPage = () => {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [generatedResume, setGeneratedResume] = useState(null);
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    currentPosition: "",
+    experienceYears: "",
+    techStack: "",
+    workHistory: [],
+    skills: [],
+  });
+
+  const [currentJob, setCurrentJob] = useState({
+    company: "",
+    role: "",
+    startDate: "",
+    endDate: "",
+    currentlyWorking: false,
+    summary: "",
+  });
+
+  const [skillInput, setSkillInput] = useState("");
+
+  /* -------------------- BASIC HANDLERS -------------------- */
+
+  const nextStep = () =>
+    setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+
+  const prevStep = () =>
+    setCurrentStep((prev) => Math.max(prev - 1, 0));
+
+  /* -------------------- WORK HISTORY -------------------- */
+
+  const addJob = () => {
+    if (!currentJob.company || !currentJob.role) return;
+
+    setFormData((prev) => ({
+      ...prev,
+      workHistory: [...prev.workHistory, currentJob],
+    }));
+
+    setCurrentJob({
+      company: "",
+      role: "",
+      startDate: "",
+      endDate: "",
+      currentlyWorking: false,
+      summary: "",
+    });
+  };
+
+  const removeJob = (index) => {
+    setFormData((prev) => ({
+      ...prev,
+      workHistory: prev.workHistory.filter((_, i) => i !== index),
+    }));
+  };
+
+  /* -------------------- SKILLS -------------------- */
+
+  const addSkill = () => {
+    if (!skillInput.trim()) return;
+    setFormData((prev) => ({
+      ...prev,
+      skills: [...prev.skills, skillInput.trim()],
+    }));
+    setSkillInput("");
+  };
+
+  const removeSkill = (index) => {
+    setFormData((prev) => ({
+      ...prev,
+      skills: prev.skills.filter((_, i) => i !== index),
+    }));
+  };
+
+  /* -------------------- SUBMIT -------------------- */
+
+  const handleSubmit = async () => {
+    const formattedWorkHistory = formData.workHistory.map((job) => ({
+      company: job.company,
+      role: job.role,
+      duration: `${job.startDate} - ${
+        job.currentlyWorking ? "Present" : job.endDate
+      }`,
+      summary: job.summary,
+    }));
+
+    const payload = {
+      fullName: formData.fullName,
+      currentPosition: formData.currentPosition,
+      experienceYears: formData.experienceYears,
+      techStack: formData.skills.join(", "),
+      workHistory: formattedWorkHistory,
+    };
+
+    try {
+      const res = await fetch("http://localhost:3001/resume/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      setGeneratedResume(data);
+      nextStep();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  /* ========================================================= */
+
   return (
     <div className="min-h-screen bg-white">
-      {/* Stepper Header */}
+      {/* HEADER */}
       <div className="border-b border-gray-100 py-4">
-        <div className="max-w-4xl mx-auto px-6 flex justify-between items-center">
+        <div className="max-w-5xl mx-auto px-6 flex justify-between items-center">
           <span className="font-bold text-gray-800">Resume Builder</span>
+
           <div className="flex gap-2">
-            {[1, 2, 3, 4].map((step) => (
+            {steps.map((_, index) => (
               <div
-                key={step}
-                className={`h-2 w-12 rounded-full ${step <= 2 ? "bg-emerald-400" : "bg-gray-100"}`}
-              ></div>
+                key={index}
+                className={`h-2 w-12 rounded-full ${
+                  index <= currentStep
+                    ? "bg-emerald-400"
+                    : "bg-gray-100"
+                }`}
+              />
             ))}
           </div>
-          <span className="text-sm text-gray-400">Step 2 of 4</span>
+
+          <span className="text-sm text-gray-400">
+            Step {currentStep + 1} of {steps.length}
+          </span>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-6 py-12 flex gap-12">
-        {/* Sidebar Nav */}
-        <div className="w-1/4 space-y-2">
-          {["Basics", "Work History", "Education", "Skills", "Finalize"].map(
-            (item, idx) => (
+      <div className="max-w-5xl mx-auto px-6 py-12 flex gap-12">
+        {/* SIDEBAR */}
+        <div className="w-1/4 space-y-3">
+          {steps.map((item, idx) => (
+            <div
+              key={idx}
+              className={`flex items-center gap-3 p-3 rounded-xl ${
+                idx === currentStep
+                  ? "bg-emerald-50 text-emerald-900 font-semibold"
+                  : "text-gray-500"
+              }`}
+            >
               <div
-                key={idx}
-                className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer ${idx === 1 ? "bg-emerald-50 text-emerald-900 font-semibold" : "text-gray-500 hover:bg-gray-50"}`}
-              >
-                <div
-                  className={`w-2 h-2 rounded-full ${idx === 1 ? "bg-emerald-500" : "bg-gray-300"}`}
-                ></div>
-                {item}
-              </div>
-            ),
-          )}
+                className={`w-2 h-2 rounded-full ${
+                  idx === currentStep
+                    ? "bg-emerald-500"
+                    : "bg-gray-300"
+                }`}
+              />
+              {item}
+            </div>
+          ))}
         </div>
 
-        {/* Form Content */}
-        <div className="flex-1">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Work History
-          </h2>
-          <p className="text-gray-500 mb-8">
-            Where have you worked? Start with your most recent role.
-          </p>
+        {/* CONTENT */}
+        <div className="flex-1 space-y-8">
 
-          <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-500 uppercase">
-                  Job Title
-                </label>
-                <input
-                  type="text"
-                  className="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-emerald-200 outline-none"
-                  placeholder="e.g. Software Engineer"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-500 uppercase">
-                  Employer
-                </label>
-                <input
-                  type="text"
-                  className="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-emerald-200 outline-none"
-                  placeholder="e.g. Google"
-                />
-              </div>
-            </div>
+          {/* ================= BASICS ================= */}
+          {currentStep === 0 && (
+            <>
+              <h2 className="text-2xl font-bold">Basic Info</h2>
 
-            <div className="grid grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-500 uppercase">
-                  Start Date
-                </label>
+              <input
+                placeholder="Full Name"
+                className="input"
+                onChange={(e) =>
+                  setFormData({ ...formData, fullName: e.target.value })
+                }
+              />
+              <input
+                placeholder="Current Position"
+                className="input"
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    currentPosition: e.target.value,
+                  })
+                }
+              />
+              <input
+                type="number"
+                placeholder="Years of Experience"
+                className="input"
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    experienceYears: e.target.value,
+                  })
+                }
+              />
+            </>
+          )}
+
+          {/* ================= WORK HISTORY ================= */}
+          {currentStep === 1 && (
+            <>
+              <h2 className="text-2xl font-bold">Work History</h2>
+
+              <input
+                placeholder="Role"
+                className="input"
+                value={currentJob.role}
+                onChange={(e) =>
+                  setCurrentJob({ ...currentJob, role: e.target.value })
+                }
+              />
+              <input
+                placeholder="Company"
+                className="input"
+                value={currentJob.company}
+                onChange={(e) =>
+                  setCurrentJob({ ...currentJob, company: e.target.value })
+                }
+              />
+
+              <div className="grid grid-cols-2 gap-4">
                 <input
                   type="month"
-                  className="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-emerald-200 outline-none"
+                  className="input"
+                  value={currentJob.startDate}
+                  onChange={(e) =>
+                    setCurrentJob({
+                      ...currentJob,
+                      startDate: e.target.value,
+                    })
+                  }
                 />
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-500 uppercase">
-                  End Date
-                </label>
-                <input
-                  type="month"
-                  className="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-emerald-200 outline-none"
-                />
-              </div>
-            </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-500 uppercase">
-                Description
+                {!currentJob.currentlyWorking && (
+                  <input
+                    type="month"
+                    className="input"
+                    value={currentJob.endDate}
+                    onChange={(e) =>
+                      setCurrentJob({
+                        ...currentJob,
+                        endDate: e.target.value,
+                      })
+                    }
+                  />
+                )}
+              </div>
+
+              <label className="flex items-center gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  checked={currentJob.currentlyWorking}
+                  onChange={(e) =>
+                    setCurrentJob({
+                      ...currentJob,
+                      currentlyWorking: e.target.checked,
+                    })
+                  }
+                />
+                Currently Working Here
               </label>
+
               <textarea
-                className="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-emerald-200 outline-none min-h-[150px]"
-                placeholder="Briefly describe your responsibilities..."
-              ></textarea>
-              <div className="flex gap-2 mt-2">
-                <button className="text-xs font-semibold bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full">
-                  + Add "Led a team"
-                </button>
-                <button className="text-xs font-semibold bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full">
-                  + Add "Increased revenue"
+                placeholder="Describe responsibilities..."
+                className="input min-h-[120px]"
+                value={currentJob.summary}
+                onChange={(e) =>
+                  setCurrentJob({
+                    ...currentJob,
+                    summary: e.target.value,
+                  })
+                }
+              />
+
+              <button
+                onClick={addJob}
+                className="bg-emerald-500 text-white px-4 py-2 rounded-xl"
+              >
+                Add Job
+              </button>
+
+              {/* LIST JOBS */}
+              <div className="space-y-4">
+                {formData.workHistory.map((job, index) => (
+                  <div
+                    key={index}
+                    className="bg-gray-50 p-4 rounded-xl"
+                  >
+                    <div className="font-semibold">
+                      {job.role} @ {job.company}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      {job.startDate} -{" "}
+                      {job.currentlyWorking
+                        ? "Present"
+                        : job.endDate}
+                    </div>
+                    <button
+                      onClick={() => removeJob(index)}
+                      className="text-xs text-red-500 mt-2"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* ================= SKILLS ================= */}
+          {currentStep === 2 && (
+            <>
+              <h2 className="text-2xl font-bold">Skills</h2>
+
+              <div className="flex gap-3">
+                <input
+                  placeholder="Add skill"
+                  className="input"
+                  value={skillInput}
+                  onChange={(e) => setSkillInput(e.target.value)}
+                />
+                <button
+                  onClick={addSkill}
+                  className="bg-emerald-500 text-white px-4 rounded-xl"
+                >
+                  Add
                 </button>
               </div>
-            </div>
-          </div>
 
-          <div className="mt-10 flex justify-end gap-4">
-            <button className="px-6 py-3 text-gray-500 font-semibold hover:bg-gray-50 rounded-xl">
-              Back
-            </button>
-            <Button className="px-10">Next: Education</Button>
+              <div className="flex flex-wrap gap-2 mt-4">
+                {formData.skills.map((skill, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full text-sm cursor-pointer"
+                    onClick={() => removeSkill(index)}
+                  >
+                    {skill} ✕
+                  </span>
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* ================= FINALIZE ================= */}
+          {currentStep === 3 && (
+            <>
+              <h2 className="text-2xl font-bold">Generate Resume</h2>
+
+              {!generatedResume && (
+                <Button onClick={handleSubmit}>
+                  Generate Resume
+                </Button>
+              )}
+
+              {generatedResume && (
+                <pre className="bg-gray-50 p-6 rounded-xl overflow-auto text-sm">
+                  {JSON.stringify(generatedResume, null, 2)}
+                </pre>
+              )}
+            </>
+          )}
+
+          {/* FOOTER BUTTONS */}
+          <div className="flex justify-between pt-8">
+            {currentStep > 0 && (
+              <button
+                onClick={prevStep}
+                className="px-6 py-3 text-gray-500"
+              >
+                Back
+              </button>
+            )}
+
+            {currentStep < steps.length - 1 && (
+              <Button onClick={nextStep}>Next</Button>
+            )}
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default BuilderPage;
