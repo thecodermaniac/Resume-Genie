@@ -1,0 +1,42 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[empty]{fullpage}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\begin{document}
+
+\begin{center}
+{\Huge \textbf{ {{profile.name}} }}\\
+{{profile.role}} • {{profile.experienceYears}} years
+\end{center}
+
+\vspace{6pt}
+
+\section*{Objective}
+{{objective}}
+
+\vspace{6pt}
+
+\section*{Skills}
+\begin{itemize}[leftmargin=*]
+{{#each skills}}
+\item {{this}}
+{{/each}}
+\end{itemize}
+
+\vspace{6pt}
+
+\section*{Experience}
+
+{{#each experience}}
+\textbf{ {{company}} }\\
+\begin{itemize}[leftmargin=*]
+{{#each responsibilities}}
+\item {{this}}
+{{/each}}
+\end{itemize}
+\vspace{6pt}
+{{/each}}
+
+\end{document}

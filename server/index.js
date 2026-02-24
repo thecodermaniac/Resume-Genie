@@ -4,6 +4,7 @@ import cors from "cors";
 import askRoutes from "./routes/askRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import analysisRoutes from "./routes/analysisRoutes.js";
+import pdfRoutes from "./routes/pdfRoutes.js";
 import { demoLimiter } from "./utils/rateLimiter.js";
 import { globalErrorHandler } from "./utils/errorHandler.js";
 
@@ -20,6 +21,7 @@ app.use("/uploads", express.static("uploads"));
 app.use(askRoutes);
 app.use(uploadRoutes);
 app.use(analysisRoutes);
+app.use(pdfRoutes);
 app.use((err, req, res, next) => {
   console.error("GLOBAL ERROR:", err);
   res.status(500).json({ message: err.message });

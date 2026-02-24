@@ -6,6 +6,8 @@ const steps = ["Basics", "Work History", "Skills", "Finalize"];
 const BuilderPage = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [generatedResume, setGeneratedResume] = useState(null);
+  const [pdfURL, setPdfURL] = useState(null);
+  const [selectedTemplate, setSelectedTemplate] = useState("modern");
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -86,9 +88,8 @@ const BuilderPage = () => {
     const formattedWorkHistory = formData.workHistory.map((job) => ({
       company: job.company,
       role: job.role,
-      duration: `${job.startDate} - ${
-        job.currentlyWorking ? "Present" : job.endDate
-      }`,
+      duration: `${job.startDate} - ${job.currentlyWorking ? "Present" : job.endDate
+        }`,
       summary: job.summary,
     }));
 
@@ -109,11 +110,27 @@ const BuilderPage = () => {
 
       const data = await res.json();
       setGeneratedResume(data);
+      previewPDF(data);
       nextStep();
     } catch (err) {
       console.error(err);
     }
   };
+
+
+  const previewPDF = async (resumeJSON) => {
+  const res = await fetch("http://localhost:3001/resume/pdf", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      template: selectedTemplate,
+      resume: resumeJSON,
+    }),
+  });
+
+  const blob = await res.blob();
+  setPdfURL(URL.createObjectURL(blob));
+};
 
   /* ========================================================= */
 
@@ -128,11 +145,10 @@ const BuilderPage = () => {
             {steps.map((_, index) => (
               <div
                 key={index}
-                className={`h-2 w-12 rounded-full ${
-                  index <= currentStep
-                    ? "bg-emerald-400"
-                    : "bg-gray-100"
-                }`}
+                className={`h-2 w-12 rounded-full ${index <= currentStep
+                  ? "bg-emerald-400"
+                  : "bg-gray-100"
+                  }`}
               />
             ))}
           </div>
@@ -149,18 +165,16 @@ const BuilderPage = () => {
           {steps.map((item, idx) => (
             <div
               key={idx}
-              className={`flex items-center gap-3 p-3 rounded-xl ${
-                idx === currentStep
-                  ? "bg-emerald-50 text-emerald-900 font-semibold"
-                  : "text-gray-500"
-              }`}
+              className={`flex items-center gap-3 p-3 rounded-xl ${idx === currentStep
+                ? "bg-emerald-50 text-emerald-900 font-semibold"
+                : "text-gray-500"
+                }`}
             >
               <div
-                className={`w-2 h-2 rounded-full ${
-                  idx === currentStep
-                    ? "bg-emerald-500"
-                    : "bg-gray-300"
-                }`}
+                className={`w-2 h-2 rounded-full ${idx === currentStep
+                  ? "bg-emerald-500"
+                  : "bg-gray-300"
+                  }`}
               />
               {item}
             </div>
@@ -366,6 +380,13 @@ const BuilderPage = () => {
                 <pre className="bg-gray-50 p-6 rounded-xl overflow-auto text-sm">
                   {JSON.stringify(generatedResume, null, 2)}
                 </pre>
+              )}
+
+              {pdfURL && (
+                <iframe
+                  src={pdfURL}
+                  className="w-full h-[900px] rounded-2xl border border-gray-200"
+                />
               )}
             </>
           )}
