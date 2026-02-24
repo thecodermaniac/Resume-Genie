@@ -1,11 +1,15 @@
 import { useState } from "react";
 import Button from "../components/ui/Button";
+import ResumeRenderer from "../components/resume/ResumeRenderer";
+import { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 
 const steps = ["Basics", "Work History", "Skills", "Finalize"];
 
 const BuilderPage = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [generatedResume, setGeneratedResume] = useState(null);
+  const [selectedTheme, setSelectedTheme] = useState("modern");
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -16,6 +20,10 @@ const BuilderPage = () => {
     skills: [],
   });
 
+  const THEMES = [
+    { id: "modern", label: "Modern" },
+    { id: "minimal", label: "Minimal" },
+  ];
   const [currentJob, setCurrentJob] = useState({
     company: "",
     role: "",
@@ -86,9 +94,8 @@ const BuilderPage = () => {
     const formattedWorkHistory = formData.workHistory.map((job) => ({
       company: job.company,
       role: job.role,
-      duration: `${job.startDate} - ${
-        job.currentlyWorking ? "Present" : job.endDate
-      }`,
+      duration: `${job.startDate} - ${job.currentlyWorking ? "Present" : job.endDate
+        }`,
       summary: job.summary,
     }));
 
@@ -115,6 +122,13 @@ const BuilderPage = () => {
     }
   };
 
+  const previewRef = useRef();
+
+  const handleDownload = useReactToPrint({
+    contentRef: previewRef,
+    documentTitle: "Resume",
+  });
+
   /* ========================================================= */
 
   return (
@@ -128,11 +142,10 @@ const BuilderPage = () => {
             {steps.map((_, index) => (
               <div
                 key={index}
-                className={`h-2 w-12 rounded-full ${
-                  index <= currentStep
-                    ? "bg-emerald-400"
-                    : "bg-gray-100"
-                }`}
+                className={`h-2 w-12 rounded-full ${index <= currentStep
+                  ? "bg-emerald-400"
+                  : "bg-gray-100"
+                  }`}
               />
             ))}
           </div>
@@ -149,18 +162,16 @@ const BuilderPage = () => {
           {steps.map((item, idx) => (
             <div
               key={idx}
-              className={`flex items-center gap-3 p-3 rounded-xl ${
-                idx === currentStep
-                  ? "bg-emerald-50 text-emerald-900 font-semibold"
-                  : "text-gray-500"
-              }`}
+              className={`flex items-center gap-3 p-3 rounded-xl ${idx === currentStep
+                ? "bg-emerald-50 text-emerald-900 font-semibold"
+                : "text-gray-500"
+                }`}
             >
               <div
-                className={`w-2 h-2 rounded-full ${
-                  idx === currentStep
-                    ? "bg-emerald-500"
-                    : "bg-gray-300"
-                }`}
+                className={`w-2 h-2 rounded-full ${idx === currentStep
+                  ? "bg-emerald-500"
+                  : "bg-gray-300"
+                  }`}
               />
               {item}
             </div>
@@ -357,15 +368,45 @@ const BuilderPage = () => {
               <h2 className="text-2xl font-bold">Generate Resume</h2>
 
               {!generatedResume && (
-                <Button onClick={handleSubmit}>
-                  Generate Resume
-                </Button>
+                <Button onClick={handleSubmit}>Generate Resume</Button>
               )}
 
               {generatedResume && (
-                <pre className="bg-gray-50 p-6 rounded-xl overflow-auto text-sm">
-                  {JSON.stringify(generatedResume, null, 2)}
-                </pre>
+                <div className="space-y-6">
+
+                  {/* THEME SELECTOR */}
+                  <div className="flex gap-3 flex-wrap">
+                    {THEMES.map((theme) => (
+                      <button
+                        key={theme.id}
+                        onClick={() => setSelectedTheme(theme.id)}
+                        className={`px-4 py-2 rounded-xl border text-sm ${selectedTheme === theme.id
+                          ? "bg-emerald-500 text-white border-emerald-500"
+                          : "bg-white border-gray-200"
+                          }`}
+                      >
+                        {theme.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* PREVIEW */}
+                  <div className="border rounded-xl p-6 bg-gray-50">
+                    <div ref={previewRef}>
+                      <ResumeRenderer
+                        data={generatedResume}
+                        theme={selectedTheme}
+                      />
+                    </div>
+                  </div>
+
+                  {/* ACTIONS */}
+                  <div className="flex gap-3">
+                    <Button onClick={handleDownload}>
+                      Download PDF
+                    </Button>
+                  </div>
+                </div>
               )}
             </>
           )}
