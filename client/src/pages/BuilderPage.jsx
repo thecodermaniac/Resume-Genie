@@ -391,8 +391,8 @@ const BuilderPage = () => {
                   </div>
 
                   {/* PREVIEW */}
-                  <div className="border rounded-xl p-6 bg-gray-50">
-                    <div ref={previewRef}>
+                  <div className="resume-wrapper">
+                    <div ref={previewRef} className="resume-a4">
                       <ResumeRenderer
                         data={generatedResume}
                         theme={selectedTheme}

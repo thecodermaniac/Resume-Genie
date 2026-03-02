@@ -3,3 +3,42 @@
 .input {
   @apply w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-emerald-200 outline-none;
 }
+
+
+.resume-wrapper {
+  display: flex;
+  justify-content: center;
+  background: #f3f4f6;
+  padding: 20px;
+}
+
+.resume-a4 {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 20mm;
+  background: white;
+  box-sizing: border-box;
+}
+
+/* PRINT RULES */
+@media print {
+  body {
+    background: white;
+  }
+
+  .resume-wrapper {
+    padding: 0;
+  }
+
+  .resume-a4 {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0;
+    box-shadow: none;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+}
