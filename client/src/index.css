@@ -12,10 +12,17 @@
   padding: 20px;
 }
 
-.resume-a4 {
+.resume-a4-minimal {
   width: 210mm;
   min-height: 297mm;
   padding: 20mm;
+  background: white;
+  box-sizing: border-box;
+}
+.resume-a4-modern {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 15mm;
   background: white;
   box-sizing: border-box;
 }

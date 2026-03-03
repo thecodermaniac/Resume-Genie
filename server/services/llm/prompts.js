@@ -3,19 +3,16 @@ import { ChatPromptTemplate } from "@langchain/core/prompts";
 export const RESUME_BUILD_JSON_PROMPT = ChatPromptTemplate.fromMessages([
   [
     "system",
-    "You are a professional resume writer. "
-    + "Generate realistic, concise resumes. "
-    + "Do NOT exaggerate. "
-    + "Return ONLY valid JSON."
+    "You are a professional resume writer. " + "Return ONLY valid JSON.",
   ],
   [
     "human",
     `
-Candidate Details:
+Resume Type: {resumeType}
+
 Name: {name}
 Role: {role}
-Experience: {experience} years
-Tech Stack: {techStack}
+Experience: {experienceYears} years
 
 Work History:
 {workHistory}
@@ -27,7 +24,38 @@ For each work entry include:
 - duration
 - responsibilities (as bullet list array)
 
-Return JSON in this EXACT format:
+Projects:
+{projects}
+
+IMPORTANT:
+For each project entry include:
+- name
+- tech stack
+- features (as bullet list array)
+
+Education:
+{education}
+IMPORTANT:
+For each education entry include:
+- degree
+- institution
+- duration
+
+Skills:
+{skills}
+
+If resumeType is 'experienced':
+- Generate a strong executive and professional summary based on work experience. Highlight leadership, impact, and strategic contributions. Focus on achievements and results.
+- For work history, emphasize scope of responsibility, team size, and impact. Include quantifiable achievements where possible.
+- ignore projects unless they are highly relevant or impactful. Focus on work experience and skills.
+
+If resumeType is 'junior':
+- Keep summary short, neutral and professional. Avoid using the word junior in the summary. Focus on skills, education and any relevant projects or internships.
+- For work history, focus on responsibilities and any measurable impact. Include internships, part-time jobs, or volunteer work if relevant.
+- For projects, highlight technical skills used and any tangible outcomes or features built.
+
+Return JSON in this format:
+
 
 {{
   "profile": {{
@@ -35,45 +63,36 @@ Return JSON in this EXACT format:
     "role": "",
     "experienceYears": 0
   }},
-  "objective": "",
+  "summary": "",
   "skills": [],
-  "experience": [
-    {{
-      "company": "",
-      "role": "",
-      "duration": "",
-      "responsibilities": []
+  "experience": [],
+  "projects": [],
+  "education": []
   }}
-  ]
-  }}
-`
-  ]
+`,
+  ],
 ]);
-
 
 export const RESUME_CHAT_PROMPT = ChatPromptTemplate.fromMessages([
   [
     "system",
-    "You are a resume assistant. "
-    + "Answer strictly from the provided resume. "
-    + "Return plain text only. "
-    + "Do NOT return HTML. "
-    + "Do NOT return markdown code blocks. "
-    + "Do NOT include <div>, <html>, or any markup."
+    "You are a resume assistant. " +
+      "Answer strictly from the provided resume. " +
+      "Return plain text only. " +
+      "Do NOT return HTML. " +
+      "Do NOT return markdown code blocks. " +
+      "Do NOT include <div>, <html>, or any markup.",
   ],
-  [
-    "human",
-    "Resume:\n{resume}\n\nQuestion:\n{question}"
-  ]
+  ["human", "Resume:\n{resume}\n\nQuestion:\n{question}"],
 ]);
 
 export const RESUME_ANALYSIS_JSON_PROMPT = ChatPromptTemplate.fromMessages([
   [
     "system",
-    "You are an ATS system and an experienced technical recruiter. "
-    + "Analyze resumes factually and conservatively. "
-    + "Do NOT guess missing information. "
-    + "Do NOT add skills or experience not explicitly present."
+    "You are an ATS system and an experienced technical recruiter. " +
+      "Analyze resumes factually and conservatively. " +
+      "Do NOT guess missing information. " +
+      "Do NOT add skills or experience not explicitly present.",
   ],
   [
     "human",
@@ -177,6 +196,6 @@ Important:
 - Output must be valid JSON
 - Arrays must never be null
 - Scores must be integers
-`
-  ]
+`,
+  ],
 ]);
