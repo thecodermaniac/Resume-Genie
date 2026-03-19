@@ -47,28 +47,34 @@ Skills:
 If resumeType is 'experienced':
 - Generate a strong executive and professional summary based on work experience. Highlight leadership, impact, and strategic contributions. Focus on achievements and results.
 - For work history, emphasize scope of responsibility, team size, and impact. Include quantifiable achievements where possible.
-- ignore projects unless they are highly relevant or impactful. Focus on work experience and skills.
+- Do NOT include a projects key in the JSON output at all. No projects section.
 
 If resumeType is 'junior':
 - Keep summary short, neutral and professional. Avoid using the word junior in the summary. Focus on skills, education and any relevant projects or internships.
 - For work history, focus on responsibilities and any measurable impact. Include internships, part-time jobs, or volunteer work if relevant.
 - For projects, highlight technical skills used and any tangible outcomes or features built.
+- Include a projects key in the JSON output.
 
 Return JSON in this format:
 
-
+For junior resumes:
 {{
-  "profile": {{
-    "name": "",
-    "role": "",
-    "experienceYears": 0
-  }},
+  "profile": {{ "name": "", "role": "", "experienceYears": 0 }},
   "summary": "",
   "skills": [],
   "experience": [],
   "projects": [],
   "education": []
-  }}
+}}
+
+For experienced resumes (NO projects key):
+{{
+  "profile": {{ "name": "", "role": "", "experienceYears": 0 }},
+  "summary": "",
+  "skills": [],
+  "experience": [],
+  "education": []
+}}
 `,
   ],
 ]);

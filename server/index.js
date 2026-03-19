@@ -23,14 +23,11 @@ app.use(analysisRoutes);
 app.use((err, req, res, next) => {
   console.error("GLOBAL ERROR:", err);
   res.status(500).json({ message: err.message });
-}); 
+});
 
 app.get("/health", (_req, res) => {
   res.json({ status: "ok" });
 });
 
-const PORT = process.env.PORT || 3001;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Export app for Lambda handler (lambda.js) and local server (server.js)
+export { app };

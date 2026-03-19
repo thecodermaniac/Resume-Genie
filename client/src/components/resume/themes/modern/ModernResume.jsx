@@ -58,24 +58,26 @@ export default function ModernResume({ data }) {
         </div>
       </Section>
       {/* ================= PROJECT ================= */}
-      <Section title="Projects">
-        {projects.map((feature, index) => (
-          <div key={index} className="mb-5">
-            {/* name + techstack */}
-            <div className="flex justify-between">
-              <div className="font-semibold">{feature.name}</div>
-              <div className="text-sm text-gray-700">{feature.techStack}</div>
-            </div>
+      {projects && projects.length > 0 && (
+        <Section title="Projects">
+          {projects.map((feature, index) => (
+            <div key={index} className="mb-5">
+              {/* name + techstack */}
+              <div className="flex justify-between">
+                <div className="font-semibold">{feature.name}</div>
+                <div className="text-sm text-gray-700">{feature.techStack}</div>
+              </div>
 
-            {/* Features */}
-            <ul className="list-disc ml-5 mt-2 space-y-1">
-              {feature.features.map((point, i) => (
-                <li key={i}>{point}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </Section>
+              {/* Features */}
+              <ul className="list-disc ml-5 mt-2 space-y-1">
+                {feature.features.map((point, i) => (
+                  <li key={i}>{point}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </Section>
+      )}
 
       {/* ================= EDUCATION ================= */}
       <Section title="Education">

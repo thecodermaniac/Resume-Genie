@@ -11,4 +11,12 @@ dotenv.config({
 
 console.log("ENV CHECK:", process.env.GROQ_API_KEY);
 
-import "./index.js";
+// Dynamic import AFTER dotenv.config() — ESM static imports are hoisted
+// above all code, so modules would initialize before env vars are set.
+const { app } = await import("./index.js");
+
+// Local development server — Lambda uses lambda.js instead
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

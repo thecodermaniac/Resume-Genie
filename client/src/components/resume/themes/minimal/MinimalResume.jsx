@@ -56,24 +56,26 @@ export default function MinimalResume({ data }) {
       </Section>
 
       {/* ================= PROJECT ================= */}
-      <Section title="Projects">
-        {projects.map((feature, index) => (
-          <div key={index} className="mb-3">
-            {/* tech + name */}
-            <div className="flex justify-between">
-              <span className="font-semibold">{feature.name}</span>
-              <span className="italic">{feature.techStack}</span>
-            </div>
+      {projects && projects.length > 0 && (
+        <Section title="Projects">
+          {projects.map((feature, index) => (
+            <div key={index} className="mb-3">
+              {/* tech + name */}
+              <div className="flex justify-between">
+                <span className="font-semibold">{feature.name}</span>
+                <span className="italic">{feature.techStack}</span>
+              </div>
 
-            {/* Bullets */}
-            <ul className="list-disc ml-5 mt-1 space-y-[2px]">
-              {feature.features.map((point, i) => (
-                <li key={i}>{point}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </Section>
+              {/* Bullets */}
+              <ul className="list-disc ml-5 mt-1 space-y-[2px]">
+                {feature.features.map((point, i) => (
+                  <li key={i}>{point}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </Section>
+      )}
 
       {/* ================= EDUCATION ================= */}
       <Section title="Education">

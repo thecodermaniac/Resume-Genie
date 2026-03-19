@@ -9,6 +9,8 @@ import StepEducation from "../components/builder/StepEducation";
 import StepSkills from "../components/builder/StepSkills";
 import StepFinalize from "../components/builder/StepFinalize";
 
+const API_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001";
+
 export default function BuilderPage() {
   const [resumeType, setResumeType] = useState("junior");
   const [currentStep, setCurrentStep] = useState(0);
@@ -25,13 +27,13 @@ export default function BuilderPage() {
   const steps =
     resumeType === "junior"
       ? [
-          "Basics",
-          "Education",
-          "Projects",
-          "Work History",
-          "Skills",
-          "Finalize",
-        ]
+        "Basics",
+        "Education",
+        "Projects",
+        "Work History",
+        "Skills",
+        "Finalize",
+      ]
       : ["Basics", "Work History", "Education", "Skills", "Finalize"];
 
   const [formData, setFormData] = useState({
@@ -57,11 +59,11 @@ export default function BuilderPage() {
       experienceYears: formData.experienceYears,
       skills: formData.skills,
       workHistory: formData.workHistory,
-      projects: formData.projects,
+      ...(resumeType === "junior" && { projects: formData.projects }),
       education: formData.education,
     };
 
-    const res = await fetch("http://localhost:3001/resume/create", {
+    const res = await fetch(`${API_URL}/resume/create`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -92,11 +94,10 @@ export default function BuilderPage() {
 
             <button
               onClick={() => setResumeType("experienced")}
-              className={`px-4 py-2 rounded ${
-                resumeType === "experienced"
+              className={`px-4 py-2 rounded ${resumeType === "experienced"
                   ? "bg-emerald-500 text-white"
                   : "border"
-              }`}
+                }`}
             >
               Experienced Professional
             </button>

@@ -2,13 +2,17 @@ import multer from "multer";
 import path from "path";
 import { existsSync, mkdirSync } from "fs";
 
+// Use /tmp on Lambda (only writable dir); keep relative path for local dev
+const UPLOAD_DIR = process.env.AWS_LAMBDA_FUNCTION_NAME
+  ? "/tmp/pdfUploads"
+  : "pdfUploads";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    if (!existsSync("pdfUploads")) {
-      mkdirSync("pdfUploads");
+    if (!existsSync(UPLOAD_DIR)) {
+      mkdirSync(UPLOAD_DIR, { recursive: true });
     }
-    cb(null, "pdfUploads");
+    cb(null, UPLOAD_DIR);
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));

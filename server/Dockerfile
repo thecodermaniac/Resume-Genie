@@ -1,20 +1,17 @@
 # server/Dockerfile
 
-# 1. Use an official Node runtime as a parent image
-FROM node:20.19.6-alpine
+# AWS Lambda official Node.js 20 runtime (includes the Lambda Runtime Interface)
+FROM public.ecr.aws/lambda/nodejs:20
 
-# 2. Set the working directory
-WORKDIR /app
+# Lambda uses /var/task as the function code directory
+WORKDIR ${LAMBDA_TASK_ROOT}
 
-# 3. Copy package.json and install dependencies
+# Install dependencies first (better layer caching)
 COPY package.json package-lock.json ./
 RUN npm install --production
 
-# 4. Copy the rest of the backend code
+# Copy the rest of the app
 COPY . .
 
-# 5. Expose the port your app runs on
-EXPOSE 3001
-
-# 6. Command to run the app
-CMD ["node", "index.js"]
+# Lambda handler: file.exportedFunction → lambda.handler
+CMD ["lambda.handler"]
