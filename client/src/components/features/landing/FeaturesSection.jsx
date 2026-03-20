@@ -43,7 +43,7 @@ const FeaturesSection = () => {
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-20">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">Powerful Features</h2>
+          <h2 className="text-2xl md:text-5xl font-extrabold text-gray-900 mb-4">Powerful Features</h2>
           <p className="text-gray-500 max-w-2xl mx-auto">Everything you need to go from "Open to Work" to "Hired".</p>
         </div>
 
@@ -53,8 +53,8 @@ const FeaturesSection = () => {
               {/* Text Side */}
               <div className="flex-1">
                 <SectionBadge icon={feature.icon} text={feature.badge} />
-                <h3 className="text-3xl font-bold text-gray-900 mb-6">{feature.title}</h3>
-                <p className="text-gray-600 text-lg leading-relaxed mb-8">{feature.desc}</p>
+                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">{feature.title}</h3>
+                <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-8">{feature.desc}</p>
                 <ul className="space-y-3">
                   {feature.points.map((point, pIdx) => (
                     <li key={pIdx} className="flex items-center gap-3">

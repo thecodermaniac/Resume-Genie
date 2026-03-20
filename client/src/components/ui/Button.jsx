@@ -7,7 +7,7 @@ const Button = ({
   className = "", 
   ...props 
 }) => {
-  const baseStyles = "inline-flex items-center justify-center px-8 py-3.5 font-bold rounded-full transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:pointer-events-none";
+  const baseStyles = "inline-flex items-center justify-center px-6 py-2.5 md:px-8 md:py-3.5 font-bold rounded-full transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:pointer-events-none";
   
   const variants = {
     primary: "bg-gradient-to-br from-lime-200 via-emerald-300 to-teal-400 text-emerald-950 shadow-lg shadow-emerald-200/50 hover:shadow-xl hover:-translate-y-1",

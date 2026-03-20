@@ -46,7 +46,6 @@ const AnalysisPage = () => {
   const handleReset = () => {
     setAnalysis(null);
     setJobDescription("");
-    setAnimatedScore(0);
   };
 
   return (

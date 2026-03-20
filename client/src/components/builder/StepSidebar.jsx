@@ -1,10 +1,10 @@
 export default function StepSidebar({ steps, currentStep }) {
   return (
-    <div className="w-1/4 space-y-3">
+    <div className="w-full md:w-1/4 flex md:flex-col overflow-x-auto md:overflow-visible gap-2 md:gap-0 md:space-y-3 pb-2 md:pb-0 scrollbar-hide">
       {steps.map((item, idx) => (
         <div
           key={idx}
-          className={`flex items-center gap-3 p-3 rounded-xl ${
+          className={`flex-shrink-0 flex items-center gap-2 md:gap-3 p-2 md:p-3 rounded-xl transition-colors ${
             idx === currentStep
               ? "bg-emerald-50 text-emerald-900 font-semibold"
               : "text-gray-500"
@@ -17,7 +17,7 @@ export default function StepSidebar({ steps, currentStep }) {
                 : "bg-gray-300"
             }`}
           />
-          {item}
+          <span className="text-sm md:text-base">{item}</span>
         </div>
       ))}
     </div>

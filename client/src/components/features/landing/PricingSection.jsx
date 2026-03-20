@@ -28,7 +28,7 @@ const PricingSection = () => {
     <section id="pricing" className="py-24 bg-white relative">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">Choose your plan</h2>
+          <h2 className="text-2xl md:text-5xl font-extrabold text-gray-900 mb-4">Choose your plan</h2>
           <p className="text-gray-500">Invest in your career for less than the cost of a lunch.</p>
         </div>
 

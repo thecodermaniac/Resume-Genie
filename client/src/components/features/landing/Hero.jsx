@@ -19,13 +19,13 @@ const Hero = () => {
       />
       {/* <div className="absolute z-0 top-0 left-1/2  w-full h-full bg-gradient-to-b from-emerald-300/30 via-teal-200/30 to-transparent rounded-full blur-[120px]" /> */}
       {/* <div className="absolute z-0 top-0 right-1/2  w-full h-full bg-gradient-to-b from-indigo-300/30 via-blue-200/30 to-transparent rounded-full blur-[120px]" /> */}
-      <h1 className="relative z-10 text-5xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-6">
+      <h1 className="relative z-10 text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-6">
         Simplifying Your <br />
         <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-500 to-emerald-600 animate-gradient">
           Job Search.
         </span>
       </h1>
-      <p className="relative z-10 text-gray-500 text-lg mb-12 max-w-xl mx-auto">
+      <p className="relative z-10 text-gray-500 text-base md:text-lg mb-12 max-w-xl mx-auto">
         Your friendly AI career coach. Build, analyze, and chat with your resume
         to land your dream job faster.
       </p>
@@ -92,12 +92,12 @@ const Hero = () => {
         </button> */}
 
       <div className="flex flex-col md:flex-row justify-center gap-4 mb-20">
-        <Button className="px-10 py-4 text-lg">
+        <Button className="px-6 py-3 md:px-10 md:py-4 text-base md:text-lg">
           <Link to="/builder">
             Start Building Free
           </Link>
         </Button>
-        <Button variant="secondary" className="px-10 py-4 text-lg">
+        <Button variant="secondary" className="px-6 py-3 md:px-10 md:py-4 text-base md:text-lg">
           See It In Action
         </Button>
       </div>

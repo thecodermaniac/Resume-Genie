@@ -9,16 +9,16 @@ const Cta = () => {
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-emerald-900/40 via-gray-900 to-gray-900 -z-10"></div>
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-teal-900/30 to-transparent rounded-full blur-[100px] -z-10"></div>
 
-        <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-8 leading-tight">
+        <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-8 leading-tight">
           Stop guessing. <br />
           Start getting hired.
         </h2>
-        <p className="text-gray-300 text-xl mb-10 max-w-xl mx-auto">
+        <p className="text-gray-300 text-lg md:text-xl mb-10 max-w-xl mx-auto">
           Join thousands of professionals using AI to accelerate their career
           path today.
         </p>
         <div className="flex justify-center">
-          <Button className="px-12 py-5 text-lg">
+          <Button className="px-8 py-3 md:px-12 md:py-5 text-base md:text-lg">
             <Link to="/analysis" className="flex items-center gap-2">
             Start Analysis for Free <ArrowRight />
             </Link>

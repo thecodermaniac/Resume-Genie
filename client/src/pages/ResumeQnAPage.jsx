@@ -137,10 +137,10 @@ const ResumeQnAPage = () => {
   };
 
   return (
-    <div className="flex-1 flex gap-6 px-6 pb-6 max-w-7xl mx-auto w-full">
+    <div className="flex-1 flex flex-col md:flex-row gap-6 px-4 md:px-6 pb-6 max-w-7xl mx-auto w-full">
 
       {/* LEFT PANEL */}
-      <div className="w-5/12 bg-white rounded-3xl shadow-sm border border-gray-200 max-h-screen flex flex-col">
+      <div className="w-full md:w-5/12 bg-white rounded-3xl shadow-sm border border-gray-200 h-[50vh] md:max-h-screen flex flex-col">
 
         <div className="h-12 border-b border-gray-100 flex items-center px-4 justify-between bg-gray-50/50">
           <span className="text-xs font-semibold text-gray-400">
@@ -223,7 +223,7 @@ const ResumeQnAPage = () => {
       </div>
 
       {/* RIGHT PANEL */}
-      <div className="w-7/12 bg-white rounded-3xl shadow-sm border border-gray-200 flex flex-col">
+      <div className="w-full md:w-7/12 bg-white rounded-3xl shadow-sm border border-gray-200 h-[50vh] md:h-auto flex flex-col">
         <div className="p-6 border-b border-gray-100">
           <h2 className="text-xl font-bold text-gray-800">Resume Q&A</h2>
           <p className="text-sm text-gray-400">
