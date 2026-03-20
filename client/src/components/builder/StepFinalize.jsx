@@ -13,14 +13,22 @@ export default function StepFinalize({
   setSelectedTheme,
   previewRef,
   handleDownload,
+  isGenerating,
 }) {
   return (
     <>
       <h2 className="text-2xl font-bold">Generate Resume</h2>
 
       {!generatedResume && (
-        <Button onClick={handleSubmit}>
-          Generate Resume
+        <Button onClick={handleSubmit} disabled={isGenerating}>
+          {isGenerating ? (
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 border-2 border-emerald-200 border-t-emerald-800 rounded-full animate-spin"></div>
+              Generating...
+            </div>
+          ) : (
+            "Generate Resume"
+          )}
         </Button>
       )}
 
