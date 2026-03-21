@@ -98,7 +98,9 @@ const Hero = () => {
           </Link>
         </Button>
         <Button variant="secondary" className="px-6 py-3 md:px-10 md:py-4 text-base md:text-lg">
-          See It In Action
+          <Link to="/resume-qna">
+            See It In Action
+          </Link>
         </Button>
       </div>
     </main>

@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { Upload, RotateCcw } from "lucide-react";
+import toast from "react-hot-toast";
 
 import SkillComparison from "../components/ui/SkillComparison";
 import JobComparison from "../components/ui/JobComparison";
@@ -33,10 +34,15 @@ const AnalysisPage = () => {
         body: formData,
       });
 
+      if (!response.ok) {
+        throw new Error(`API returned status: ${response.status}`);
+      }
+
       const data = await response.json();
       setAnalysis(data);
     } catch (err) {
       console.error(err);
+      toast("Failed to analyze resume. Please try again.", { icon: "⚠️" });
     } finally {
       setLoading(false);
       if (fileInputRef.current) fileInputRef.current.value = "";

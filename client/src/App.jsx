@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import { Toaster, ToastBar, toast } from 'react-hot-toast';
+import { X } from 'lucide-react';
 import Navbar from "./components/layout/Navbar";
 import Homepage from "./pages/Homepage";
 import Footer from "./components/layout/Footer";
@@ -20,6 +22,42 @@ function App() {
   }, [location.pathname]);
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900">
+      <Toaster 
+        position="top-center"
+        toastOptions={{
+          style: {
+            border: '1px solid #10b981',
+            padding: '16px',
+            color: '#064e3b',
+            background: '#ecfdf5',
+            borderRadius: '0.75rem',
+            boxShadow: '0 4px 6px -1px rgba(16, 185, 129, 0.1)',
+          },
+          iconTheme: {
+            primary: '#10b981',
+            secondary: '#fff',
+          },
+        }}
+      >
+        {(t) => (
+          <ToastBar toast={t}>
+            {({ icon, message }) => (
+              <>
+                {icon}
+                {message}
+                {t.type !== 'loading' && (
+                  <button
+                    onClick={() => toast.dismiss(t.id)}
+                    className="ml-2 flex-shrink-0 text-emerald-600 hover:text-emerald-800 outline-none p-1 rounded-full hover:bg-emerald-100 transition-colors"
+                  >
+                    <X size={16} />
+                  </button>
+                )}
+              </>
+            )}
+          </ToastBar>
+        )}
+      </Toaster>
       <Navbar />
       <Routes>
         <Route path="/" element={<Homepage />} />

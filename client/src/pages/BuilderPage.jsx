@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
+import toast from "react-hot-toast";
 
 import BuilderLayout from "../components/builder/BuilderLayout";
 import StepBasics from "../components/builder/StepBasics";
@@ -74,7 +75,7 @@ export default function BuilderPage() {
     if (isStepValid()) {
       nextStep();
     } else {
-      alert(`Please fill out required fields/add at least one entry for ${steps[currentStep]} to proceed.`);
+      toast(`Ensure all required fields/add at least one entry for ${steps[currentStep]} to proceed.`, { icon: "⚠️" });
     }
   };
 
@@ -82,7 +83,7 @@ export default function BuilderPage() {
 
   const handleSubmit = async () => {
     if (!isStepValid()) {
-      alert("Ensure all required steps are completed before generating.");
+      toast("Ensure all required steps are completed before generating.", { icon: "⚠️" });
       return;
     }
     setIsGenerating(true);
@@ -104,11 +105,15 @@ export default function BuilderPage() {
         body: JSON.stringify(payload),
       });
 
+      if (!res.ok) {
+        throw new Error(`API returned status: ${res.status}`);
+      }
+
       const data = await res.json();
       setGeneratedResume(data);
     } catch (err) {
       console.error(err);
-      alert("Failed to generate resume. Please check your connection.");
+      toast("Failed to generate resume. Please check your connection.", { icon: "⚠️" });
     } finally {
       setIsGenerating(false);
     }

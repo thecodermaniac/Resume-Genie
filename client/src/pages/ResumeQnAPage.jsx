@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { MessageSquare, Send, Upload, RefreshCcw } from "lucide-react";
 import { Document, Page, pdfjs } from "react-pdf";
+import toast from "react-hot-toast";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
@@ -52,6 +53,10 @@ const ResumeQnAPage = () => {
         body: formData,
       });
 
+      if (!response.ok) {
+        throw new Error(`API returned status: ${response.status}`);
+      }
+
       const data = await response.json();
 
       setResumeText(data.resumeText);
@@ -74,6 +79,7 @@ const ResumeQnAPage = () => {
 
     } catch (err) {
       console.error(err);
+      toast("Failed to parse resume upload. Please check your connection.", { icon: "⚠️" });
     } finally {
       setUploading(false);
 
@@ -105,6 +111,10 @@ const ResumeQnAPage = () => {
         }),
       });
 
+      if (!response.ok) {
+        throw new Error(`API returned status: ${response.status}`);
+      }
+
       const data = await response.json();
 
       setMessages((prev) => [
@@ -113,6 +123,7 @@ const ResumeQnAPage = () => {
       ]);
     } catch (err) {
       console.error(err);
+      toast("Failed to fetch response. Please try again.", { icon: "⚠️" });
     } finally {
       setLoading(false);
     }
@@ -137,10 +148,15 @@ const ResumeQnAPage = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col md:flex-row gap-6 px-4 md:px-6 pb-6 max-w-7xl mx-auto w-full">
+    <>
+      <style>{`
+        .react-pdf__Page { max-width: 100%; border-radius: 0.75rem; overflow: hidden; }
+        .react-pdf__Page__canvas { max-width: 100% !important; height: auto !important; }
+      `}</style>
+      <div className="flex-1 flex flex-col md:flex-row items-start gap-6 px-4 md:px-6 pb-6 max-w-7xl mx-auto w-full">
 
       {/* LEFT PANEL */}
-      <div className="w-full md:w-5/12 bg-white rounded-3xl shadow-sm border border-gray-200 h-[50vh] md:max-h-screen flex flex-col">
+      <div className="w-full md:w-5/12 bg-white rounded-3xl shadow-sm border border-gray-200 flex flex-col overflow-hidden">
 
         <div className="h-12 border-b border-gray-100 flex items-center px-4 justify-between bg-gray-50/50">
           <span className="text-xs font-semibold text-gray-400">
@@ -158,7 +174,7 @@ const ResumeQnAPage = () => {
           )}
         </div>
 
-        <div className="flex-1  overflow-y-auto bg-gray-100/50 relative">
+        <div className="flex-1 p-4 bg-gray-100/50 relative">
 
           {/* Upload State */}
           {!resumeText && !uploading && (
@@ -202,10 +218,9 @@ const ResumeQnAPage = () => {
                   <Page
                     key={`page_${index + 1}`}
                     pageNumber={index + 1}
-                    width={450}
                     renderTextLayer={false}
                     renderAnnotationLayer={false}
-                    className="mb-6 shadow-md"
+                    className="mb-6 shadow-md w-full max-w-full"
                   />
                 ))}
               </Document>
@@ -223,7 +238,7 @@ const ResumeQnAPage = () => {
       </div>
 
       {/* RIGHT PANEL */}
-      <div className="w-full md:w-7/12 bg-white rounded-3xl shadow-sm border border-gray-200 h-[50vh] md:h-auto flex flex-col">
+      <div className="w-full md:w-7/12 bg-white rounded-3xl shadow-sm border border-gray-200 h-[70vh] md:h-[calc(100vh-120px)] flex flex-col sticky top-6 md:top-24">
         <div className="p-6 border-b border-gray-100">
           <h2 className="text-xl font-bold text-gray-800">Resume Q&A</h2>
           <p className="text-sm text-gray-400">
@@ -296,8 +311,8 @@ const ResumeQnAPage = () => {
           </button>
         </div>
       </div>
-    </div>
-
+      </div>
+    </>
   );
 };
 
